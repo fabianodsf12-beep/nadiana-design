@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Nome do app – Nadiana</title>
+<!-- Modelo de partida para um novo app da Nadiana. Copie este arquivo e troque os caminhos relativos por https://fabianodsf12-beep.github.io/nadiana-design/v1/. -->
+<link rel="icon" href="logos/nadiana-simbolo.png">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="componentes.css">
+<script src="icones.js"></script>
+<script src="nadiana.js" defer></script>
+<style>
+/* Estilos só deste app. Use sempre var(--token); nenhuma cor solta. */
+main{display:flex;flex-direction:column;gap:var(--space-6);padding-block:var(--space-5)}
+</style>
+</head>
+<body>
+<div class="nd-app">
+  <!-- Navegação: embaixo no celular, lateral no computador. Até 5 itens. -->
+  <nav class="nd-nav" aria-label="Principal">
+    <div class="marca"><span class="nd-logo"><img src="logos/nadiana-logo.png" alt="Nadiana"></span></div>
+    <a href="#" aria-current="page"><svg class="nd-ic" aria-hidden="true"><use href="#i-house"/></svg>Início</a>
+    <a href="#"><svg class="nd-ic" aria-hidden="true"><use href="#i-calendar-days"/></svg>Calendário</a>
+    <a href="#"><svg class="nd-ic" aria-hidden="true"><use href="#i-map"/></svg>Talhões</a>
+    <a href="#"><svg class="nd-ic" aria-hidden="true"><use href="#i-file-text"/></svg>Relatórios</a>
+  </nav>
+
+  <div class="nd-conteudo">
+    <header class="nd-topo">
+      <div class="nd-wrap">
+        <span class="nd-logo"><img class="h" src="logos/nadiana-logo.png" alt="Nadiana"><img class="s" src="logos/nadiana-simbolo.png" alt="Nadiana"></span>
+        <div class="app"><h1>Nome do app</h1><p>Fazenda Reata, safra soja 26/27</p></div>
+        <div class="acoes">
+          <span class="nd-net"><i></i>Conectado</span>
+          <button class="nd-btn icone leve" type="button" data-nd-tema aria-label="Trocar tema claro/escuro"><svg class="nd-ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="nd-wrap">
+      <div class="nd-grade">
+        <div class="nd-cartao"><div class="nd-kpi"><span class="rot">Área aplicada</span><span class="val">142,51<small>ha</small></span><span class="var">68% do programado</span></div><div class="nd-barra"><i style="--v:68%"></i></div></div>
+        <div class="nd-cartao"><div class="nd-kpi"><span class="rot">Pendentes</span><span class="val">5</span><span class="var">2 atrasadas</span></div></div>
+      </div>
+
+      <section class="nd-secao">
+        <h2>Primeira seção</h2>
+        <div class="nd-cartao">
+          <p class="nd-corpo" style="margin:0">Diga o resultado primeiro, o detalhe depois.</p>
+          <div><button class="nd-btn primario" type="button" onclick="Nadiana.aviso('Ação feita')">Ação principal</button></div>
+        </div>
+      </section>
+
+      <footer class="nd-rodape">Os dados vêm da planilha … no Google Drive.</footer>
+    </main>
+  </div>
+</div>
+</body>
+</html>

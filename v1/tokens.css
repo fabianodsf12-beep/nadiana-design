@@ -1,0 +1,24 @@
+/* Nadiana — gerado de tokens.json por gerar_tokens.py. Não edite à mão. */
+@font-face{font-family:'Barlow';font-weight:400;font-style:normal;font-display:swap;src:url('fonts/Barlow-400.woff2') format('woff2')}
+@font-face{font-family:'Barlow';font-weight:500;font-style:normal;font-display:swap;src:url('fonts/Barlow-500.woff2') format('woff2')}
+@font-face{font-family:'Barlow';font-weight:600;font-style:normal;font-display:swap;src:url('fonts/Barlow-600.woff2') format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-weight:500;font-style:normal;font-display:swap;src:url('fonts/BarlowCondensed-500.woff2') format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-weight:600;font-style:normal;font-display:swap;src:url('fonts/BarlowCondensed-600.woff2') format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-weight:700;font-style:normal;font-display:swap;src:url('fonts/BarlowCondensed-700.woff2') format('woff2')}
+:root{
+  --nadiana-verde:#04954D;--nadiana-verde-escuro:#007637;--nadiana-verde-claro:#04B365;--nadiana-petroleo:#01252B;--nadiana-preto:#171717;--bg:#EDF0EB;--panel:#FFFFFF;--panel2:#F6F8F5;--ink:#17221C;--muted:#4F5C55;--line:#C9D1C7;--line2:#E3E8E1;--brand:#21513B;--brand-ink:#FFFFFF;--brand-soft:#E3EEE7;--ok:#1E6B45;--warn:#6B4A04;--warn-bg:#FDF2CF;--bad:#8A2D07;--bad-bg:#FDE7D8;--focus:#1E6FB8;--s-programada:#5E6A63;--s-prox7:#6FA6D2;--s-janela:#D99A06;--s-atrasada:#C2410C;--s-adiantada:#7462C4;--s-none:#E1E6DF;--mapa-aplicado:#D85C1E;--mapa-campo:#E6EBE5;--mapa-convencional:#A9B3AF;--infestacao-1:#F5CDA6;--infestacao-2:#EFA266;--infestacao-3:#D8692A;--infestacao-4:#8E3A0E;--relatorio-petroleo:#12303A;--graf-1:#04954D;--graf-2:#2A78D6;--graf-3:#D55181;--graf-4:#6250D6;--graf-outros:#A9B3AF;
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-3_5:14px;--space-4:16px;--space-5:20px;--space-6:24px;--radius-xs:2px;--radius-sm:4px;--radius-md:8px;--radius-lg:10px;--radius-xl:12px;--radius-2xl:14px;--radius-pill:999px;--sombra-1:0 1px 2px rgba(16,28,22,.06), 0 1px 3px rgba(16,28,22,.05);--sombra-2:0 4px 12px -2px rgba(16,28,22,.12), 0 2px 4px rgba(16,28,22,.06);--sombra-3:0 16px 40px -8px rgba(0,0,0,.28), 0 4px 12px rgba(0,0,0,.12);--font-body:"Barlow", "Segoe UI", system-ui, sans-serif;--font-display:"Barlow Condensed", "Barlow", sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#111814;--panel:#18211D;--panel2:#1F2A25;--ink:#E5ECE7;--muted:#A3B0A8;--line:#36433C;--line2:#2A3530;--brand:#2F7553;--brand-soft:#21362B;--ok:#7CC6A0;--warn:#F0C65A;--warn-bg:#3A3015;--bad:#F39A6B;--bad-bg:#3B2117;--focus:#7DB8EE;--s-programada:#B4BDB7;--s-prox7:#7DB4E0;--s-janela:#F0B52B;--s-atrasada:#F07A3C;--s-adiantada:#9B8BE0;--s-none:#25302A;--graf-2:#3987E5;--graf-4:#9085E9;--graf-outros:#5E6A63;color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#111814;--panel:#18211D;--panel2:#1F2A25;--ink:#E5ECE7;--muted:#A3B0A8;--line:#36433C;--line2:#2A3530;--brand:#2F7553;--brand-soft:#21362B;--ok:#7CC6A0;--warn:#F0C65A;--warn-bg:#3A3015;--bad:#F39A6B;--bad-bg:#3B2117;--focus:#7DB8EE;--s-programada:#B4BDB7;--s-prox7:#7DB4E0;--s-janela:#F0B52B;--s-atrasada:#F07A3C;--s-adiantada:#9B8BE0;--s-none:#25302A;--graf-2:#3987E5;--graf-4:#9085E9;--graf-outros:#5E6A63;color-scheme:dark}
+.nd-numero-destaque{font-family:var(--font-display);font-size:30px;font-weight:600;line-height:1.05}
+.nd-titulo-pagina{font-family:var(--font-display);font-size:28px;font-weight:600;line-height:1.05}
+.nd-subtitulo{font-family:var(--font-display);font-size:18px;font-weight:600;line-height:1.05}
+.nd-corpo-destaque{font-family:var(--font-body);font-size:17px;font-weight:500;line-height:1.4}
+.nd-corpo{font-family:var(--font-body);font-size:16px;font-weight:400;line-height:1.4}
+.nd-corpo-pequeno{font-family:var(--font-body);font-size:14px;font-weight:400;line-height:1.4}
+.nd-rotulo{font-family:var(--font-body);font-size:13px;font-weight:600;line-height:1.4;letter-spacing:0.05em;text-transform:uppercase}
+.nd-legenda{font-family:var(--font-body);font-size:12.5px;font-weight:400;line-height:1.4}

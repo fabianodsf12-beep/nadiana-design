@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Vitrine Nadiana</title>
+<link rel="icon" href="logos/nadiana-simbolo.png">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="componentes.css">
+<script src="tokens.js"></script>
+<script src="icones.js"></script>
+<script src="nadiana.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="graficos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js" defer></script>
+<script src="pdf.js" defer></script>
+<style>
+/* Estilos só da vitrine */
+main{display:flex;flex-direction:column;gap:calc(var(--space-6) * 1.5);padding-block:var(--space-6)}
+.cores{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:var(--space-3)}
+.cor{border:1px solid var(--line2);border-radius:var(--radius-xl);overflow:hidden;background:var(--panel);font-size:13px}
+.cor b{display:block;height:52px;background:var(--c)}
+.cor span{display:block;padding:var(--space-2) var(--space-3)}
+.cor code{color:var(--muted);font-size:12px}
+.sub{margin:var(--space-2) 0 0;font-family:var(--font-display);font-weight:600;font-size:17px;color:var(--muted)}
+.linha{display:flex;flex-wrap:wrap;gap:var(--space-2);align-items:center}
+.logos{display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:center;background:#FFFFFF;border-radius:var(--radius-2xl);padding:var(--space-6);border:1px solid var(--line2)}
+.logos img{height:64px;width:auto}
+.faixa-demo{border-radius:var(--radius-2xl);overflow:hidden}
+.faixa-demo .nd-faixa{padding-block:var(--space-6)}
+.sombras{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:var(--space-5)}
+.sombras div{background:var(--panel);border-radius:var(--radius-xl);padding:var(--space-5) var(--space-4);font-size:14px}
+.icones{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:var(--space-2)}
+.icones div{display:flex;flex-direction:column;align-items:center;gap:6px;padding:var(--space-3) var(--space-1);border-radius:var(--radius-lg);font-size:11.5px;color:var(--muted);text-align:center;word-break:break-word}
+.icones div:hover{background:var(--panel)}
+.icones .nd-ic{color:var(--ink);width:24px;height:24px}
+.pdf-prev{width:100%;max-width:420px;border:1px solid var(--line2);border-radius:var(--radius-md);box-shadow:var(--sombra-2);background:#FFFFFF}
+.duas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:var(--space-4);align-items:start}
+.nota{font-size:14px;color:var(--muted);margin:0;max-width:70ch}
+</style>
+</head>
+<body>
+<div class="nd-app">
+  <nav class="nd-nav" aria-label="Seções da vitrine">
+    <div class="marca"><span class="nd-logo"><img src="logos/nadiana-logo.png" alt="Nadiana"></span></div>
+    <a href="#marca" aria-current="page"><svg class="nd-ic" aria-hidden="true"><use href="#i-sprout"/></svg>Marca</a>
+    <a href="#cores"><svg class="nd-ic" aria-hidden="true"><use href="#i-droplets"/></svg>Cores</a>
+    <a href="#componentes"><svg class="nd-ic" aria-hidden="true"><use href="#i-layout-dashboard"/></svg>Componentes</a>
+    <a href="#graficos"><svg class="nd-ic" aria-hidden="true"><use href="#i-chart-column"/></svg>Gráficos</a>
+    <a href="#pdf"><svg class="nd-ic" aria-hidden="true"><use href="#i-file-text"/></svg>PDF</a>
+  </nav>
+
+  <div class="nd-conteudo">
+    <header class="nd-topo">
+      <div class="nd-wrap">
+        <span class="nd-logo"><img class="h" src="logos/nadiana-logo.png" alt="Nadiana"><img class="s" src="logos/nadiana-simbolo.png" alt="Nadiana"></span>
+        <div class="app"><h1>Vitrine Nadiana</h1><p>Base de design de todos os projetos</p></div>
+        <div class="acoes">
+          <span class="nd-net"><i></i>Conectado</span>
+          <button class="nd-btn icone leve" type="button" data-nd-tema aria-label="Trocar tema claro/escuro"><svg class="nd-ic" aria-hidden="true"><use id="ic-tema" href="#i-moon"/></svg></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="nd-wrap">
+      <!-- MARCA -->
+      <section class="nd-secao" id="marca">
+        <h2>Marca</h2>
+        <div class="logos">
+          <img src="logos/nadiana-logo-vertical.png" alt="Nadiana, logo vertical">
+          <img src="logos/nadiana-logo.png" alt="Nadiana, logo horizontal" style="height:40px">
+          <img src="logos/nadiana-simbolo.png" alt="Nadiana, símbolo">
+        </div>
+        <p class="nota">Cabeçalho dos apps: claro, com o logo horizontal (no celular, só o símbolo). O verde fica para o que se toca. Capas, tela inicial e abertura de relatório usam a faixa de marca em petróleo:</p>
+        <div class="faixa-demo">
+          <div class="nd-faixa"><div class="nd-wrap">
+            <span class="nd-logo"><img src="logos/nadiana-logo.png" alt="Nadiana"></span>
+            <h1>Aplicações da safra</h1><p>Fazenda Reata, soja 26/27</p>
+          </div></div>
+        </div>
+      </section>
+
+      <!-- CORES -->
+      <section class="nd-secao" id="cores">
+        <h2>Cores</h2>
+        <h3 class="sub">Marca</h3><div class="cores" data-grupo="nadiana-verde nadiana-verde-escuro nadiana-verde-claro nadiana-petroleo nadiana-preto"></div>
+        <h3 class="sub">Interface</h3><div class="cores" data-grupo="bg panel panel2 ink muted line line2 brand brand-ink brand-soft ok focus warn warn-bg bad bad-bg"></div>
+        <h3 class="sub">Status do calendário</h3><div class="cores" data-grupo="s-programada s-prox7 s-janela s-atrasada s-adiantada s-none"></div>
+        <h3 class="sub">Gráficos (novo)</h3><div class="cores" data-grupo="graf-1 graf-2 graf-3 graf-4 graf-outros"></div>
+        <h3 class="sub">Sombras (novo)</h3>
+        <div class="sombras">
+          <div style="box-shadow:var(--sombra-1)"><b>sombra-1</b><br><span class="nd-muted">Cartões e cabeçalho</span></div>
+          <div style="box-shadow:var(--sombra-2)"><b>sombra-2</b><br><span class="nd-muted">Ao passar o mouse, menus</span></div>
+          <div style="box-shadow:var(--sombra-3)"><b>sombra-3</b><br><span class="nd-muted">Folha, janela, aviso rápido</span></div>
+        </div>
+      </section>
+
+      <!-- TEXTOS -->
+      <section class="nd-secao">
+        <h2>Textos</h2>
+        <div class="nd-cartao">
+          <span class="nd-titulo-pagina">Lançar aplicação</span>
+          <span class="nd-subtitulo">Talhão RT-52</span>
+          <span class="nd-numero-destaque">12.702 L</span>
+          <span class="nd-corpo-destaque">Fazenda Reata</span>
+          <span class="nd-corpo">A vazão recomendada é de 100 L/ha.</span>
+          <span class="nd-corpo-pequeno">142,51 ha percorridos</span>
+          <span class="nd-rotulo nd-muted">Área aplicada</span>
+          <span class="nd-legenda nd-muted">Atualizado a cada 15 s</span>
+        </div>
+      </section>
+
+      <!-- COMPONENTES -->
+      <section class="nd-secao" id="componentes">
+        <h2>Números</h2>
+        <div class="nd-grade">
+          <div class="nd-cartao"><div class="nd-kpi"><span class="rot"><svg class="nd-ic p" aria-hidden="true"><use href="#i-map"/></svg>Área aplicada</span><span class="val">142,51<small>ha</small></span><span class="var">68% dos 209,6 ha programados</span></div><div class="nd-barra"><i style="--v:68%"></i></div></div>
+          <div class="nd-cartao"><div class="nd-kpi"><span class="rot"><svg class="nd-ic p" aria-hidden="true"><use href="#i-droplets"/></svg>Calda</span><span class="val">12.702<small>L</small></span><span class="var">89 L/ha em média</span></div></div>
+          <div class="nd-cartao"><div class="nd-kpi"><span class="rot"><svg class="nd-ic p" aria-hidden="true"><use href="#i-package"/></svg>Custo de produtos</span><span class="val">R$ 7.113,32</span><span class="var">R$ 49,91 por ha</span></div></div>
+        </div>
+      </section>
+
+      <section class="nd-secao">
+        <h2>Botões</h2>
+        <div class="linha">
+          <button class="nd-btn primario" type="button"><svg class="nd-ic" aria-hidden="true"><use href="#i-check"/></svg>Salvar programação</button>
+          <button class="nd-btn" type="button"><svg class="nd-ic" aria-hidden="true"><use href="#i-download"/></svg>Baixar planilha</button>
+          <button class="nd-btn leve" type="button">Cancelar</button>
+          <button class="nd-btn icone" type="button" aria-label="Atualizar"><svg class="nd-ic" aria-hidden="true"><use href="#i-refresh-cw"/></svg></button>
+          <button class="nd-btn" type="button" disabled>Enviando…</button>
+        </div>
+        <p class="nota">No celular, a ação principal da tela pode ficar no botão flutuante <code>.nd-fab</code> (canto de baixo, acima da navegação).</p>
+      </section>
+
+      <section class="nd-secao">
+        <h2>Abas, seletor e filtros</h2>
+        <div class="nd-cartao">
+          <div class="nd-abas" role="tablist">
+            <button type="button" role="tab" aria-selected="true">Calendário</button>
+            <button type="button" role="tab" aria-selected="false">Talhões</button>
+            <button type="button" role="tab" aria-selected="false">Produtos</button>
+            <button type="button" role="tab" aria-selected="false">Mapa</button>
+          </div>
+          <div class="nd-seg" role="group" aria-label="Tipo de lançamento">
+            <button type="button" aria-pressed="true">Programar</button>
+            <button type="button" aria-pressed="false">Execução</button>
+            <button type="button" aria-pressed="false">Plantio</button>
+          </div>
+          <label class="nd-busca" for="busca"><svg class="nd-ic" aria-hidden="true"><use href="#i-search"/></svg><span class="nd-sr">Buscar talhão</span><input class="nd-inp" id="busca" type="search" placeholder="Buscar talhão ou produto"></label>
+          <div class="nd-filtros">
+            <button class="nd-filtro" type="button" aria-pressed="true">Todas <span class="q">24</span></button>
+            <button class="nd-filtro" type="button" aria-pressed="false">Atrasadas <span class="q">2</span></button>
+            <button class="nd-filtro" type="button" aria-pressed="false">Na janela <span class="q">3</span></button>
+            <button class="nd-filtro" type="button" aria-pressed="false">Próximos 7 dias <span class="q">7</span></button>
+            <button class="nd-filtro" type="button" aria-pressed="false">Feitas <span class="q">12</span></button>
+          </div>
+          <div class="nd-chips">
+            <span class="nd-chip">Glifosato <span>2,0 L/ha</span><button type="button" aria-label="Remover Glifosato"><svg class="nd-ic p" aria-hidden="true"><use href="#i-x"/></svg></button></span>
+            <span class="nd-chip">Óleo mineral <span>0,5 L/ha</span><button type="button" aria-label="Remover Óleo mineral"><svg class="nd-ic p" aria-hidden="true"><use href="#i-x"/></svg></button></span>
+            <span class="nd-chip">RT-52</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="nd-secao">
+        <h2>Formulário</h2>
+        <form class="nd-cartao" id="form-demo" novalidate>
+          <h2>Registrar execução</h2>
+          <label class="nd-campo" for="os">Nº da OS<input class="nd-inp" id="os" inputmode="numeric" aria-invalid="true" aria-describedby="os-erro"><span class="nd-erro-campo" id="os-erro"><svg class="nd-ic p" aria-hidden="true"><use href="#i-circle-x"/></svg>Informe o nº da OS.</span></label>
+          <div class="nd-linha2">
+            <label class="nd-campo" for="data">Data<input class="nd-inp" id="data" type="date" value="2026-10-29"></label>
+            <label class="nd-campo" for="vazao">Vazão (L/ha)<input class="nd-inp" id="vazao" inputmode="decimal" value="100"></label>
+          </div>
+          <label class="nd-campo" for="obs">Observação<span class="dica">Vento, chuva ou parada do pulverizador.</span><textarea class="nd-inp" id="obs" rows="3"></textarea></label>
+          <button class="nd-btn primario grande" type="submit">Registrar execução</button>
+        </form>
+      </section>
+
+      <section class="nd-secao">
+        <h2>Situação e mensagens</h2>
+        <div class="linha">
+          <span class="nd-pill ok"><svg class="nd-ic" aria-hidden="true"><use href="#i-check"/></svg>Concluída</span>
+          <span class="nd-pill aviso"><svg class="nd-ic" aria-hidden="true"><use href="#i-clock"/></svg>3 na janela</span>
+          <span class="nd-pill erro"><svg class="nd-ic" aria-hidden="true"><use href="#i-triangle-alert"/></svg>2 atrasadas</span>
+          <span class="nd-pill">12 programadas</span>
+        </div>
+        <div class="linha" style="gap:var(--space-4)">
+          <span class="nd-st programada">Programada</span><span class="nd-st prox7">Próximos 7 dias</span><span class="nd-st janela">Na janela</span>
+          <span class="nd-st atrasada">Atrasada</span><span class="nd-st adiantada">Adiantada</span><span class="nd-st none">Sem programação</span>
+        </div>
+        <div class="nd-msg aviso"><svg class="nd-ic" aria-hidden="true"><use href="#i-wifi-off"/></svg><span><b>Sem internet</b>O lançamento fica guardado e é enviado quando a conexão voltar.</span></div>
+        <div class="nd-msg erro"><svg class="nd-ic" aria-hidden="true"><use href="#i-circle-x"/></svg><span><b>Não deu para salvar</b>A planilha não respondeu. Tente de novo em alguns minutos.</span></div>
+        <div class="linha">
+          <button class="nd-btn" type="button" id="ver-aviso"><svg class="nd-ic" aria-hidden="true"><use href="#i-bell"/></svg>Mostrar aviso rápido</button>
+          <button class="nd-btn" type="button" data-nd-abrir="folha-demo"><svg class="nd-ic" aria-hidden="true"><use href="#i-plus"/></svg>Abrir folha de baixo</button>
+        </div>
+      </section>
+
+      <section class="nd-secao">
+        <h2>Lista e tabela</h2>
+        <div class="nd-cartao" style="padding-block:var(--space-1)">
+          <div class="nd-lista">
+            <a href="#componentes"><span class="ini"><span class="av"><svg class="nd-ic" aria-hidden="true"><use href="#i-spray-can"/></svg></span><span><span class="t">RT-52 · Dessecação</span><span class="s">Programada para 02/11/2026 · 38,4 ha</span></span></span><span class="nd-st janela">Na janela</span></a>
+            <a href="#componentes"><span class="ini"><span class="av"><svg class="nd-ic" aria-hidden="true"><use href="#i-spray-can"/></svg></span><span><span class="t">RT-14 · Fungicida 1ª</span><span class="s">Era para 25/10/2026 · 52,1 ha</span></span></span><span class="nd-st atrasada">Atrasada</span></a>
+            <a href="#componentes"><span class="ini"><span class="av"><svg class="nd-ic" aria-hidden="true"><use href="#i-sprout"/></svg></span><span><span class="t">RT-07 · Plantio</span><span class="s">Feito em 28/10/2026 · 44,0 ha</span></span></span><span class="nd-pill ok">Concluído</span></a>
+          </div>
+        </div>
+        <div class="nd-tabela-wrap">
+          <table class="nd-tabela">
+            <thead><tr><th>Produto</th><th class="n">Dose</th><th class="n">Área</th><th class="n">Total</th></tr></thead>
+            <tbody>
+              <tr><td>Glifosato</td><td class="n">2,0 L/ha</td><td class="n">142,51 ha</td><td class="n">285,0 L</td></tr>
+              <tr><td>Óleo mineral</td><td class="n">0,5 L/ha</td><td class="n">142,51 ha</td><td class="n">71,3 L</td></tr>
+              <tr><td>2,4-D</td><td class="n">1,5 L/ha</td><td class="n">88,20 ha</td><td class="n">132,3 L</td></tr>
+            </tbody>
+            <tfoot><tr><td>Total</td><td></td><td></td><td class="n">488,6 L</td></tr></tfoot>
+          </table>
+        </div>
+      </section>
+
+      <section class="nd-secao">
+        <h2>Vazio e carregando</h2>
+        <div class="duas">
+          <div class="nd-cartao"><div class="nd-vazio">
+            <span class="ic"><svg class="nd-ic" aria-hidden="true"><use href="#i-clipboard-list"/></svg></span>
+            <h3>Nenhuma aplicação programada</h3>
+            <p>Programe a primeira aplicação do talhão para ela aparecer no calendário.</p>
+            <button class="nd-btn primario" type="button"><svg class="nd-ic" aria-hidden="true"><use href="#i-plus"/></svg>Programar aplicação</button>
+          </div></div>
+          <div class="nd-cartao" aria-busy="true" aria-label="Carregando">
+            <span class="nd-esq t"></span><span class="nd-esq n"></span><span class="nd-esq l"></span><span class="nd-esq c"></span><span class="nd-esq l"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="nd-secao">
+        <h2>Ícones (Lucide)</h2>
+        <p class="nota">Use com <code>&lt;svg class="nd-ic"&gt;&lt;use href="#i-tractor"/&gt;&lt;/svg&gt;</code>. Para acrescentar um, veja <code>gerar_icones.py</code>.</p>
+        <div class="icones" id="icones"></div>
+      </section>
+
+      <!-- GRÁFICOS -->
+      <section class="nd-secao" id="graficos">
+        <h2>Gráficos</h2>
+        <p class="nota">Até 4 séries, sempre na ordem graf-1 a graf-4; o resto vai em “Outros”. Série única não leva legenda: o título diz o que é.</p>
+        <div class="duas">
+          <div class="nd-cartao"><div class="cab"><h2>Consumo por produto</h2><span class="nd-legenda nd-muted">litros · safra 26/27</span></div><div class="nd-grafico" style="height:230px"><canvas id="g-produtos" aria-label="Consumo por produto em litros" role="img"></canvas></div></div>
+          <div class="nd-cartao"><div class="cab"><h2>Área aplicada por semana</h2><span class="nd-legenda nd-muted">ha</span></div><div class="nd-grafico"><canvas id="g-semanas" aria-label="Área aplicada por semana e pulverizador" role="img"></canvas></div></div>
+          <div class="nd-cartao"><div class="cab"><h2>Calda por talhão</h2><span class="nd-legenda nd-muted">L · convencional × WEED-IT</span></div><div class="nd-grafico"><canvas id="g-weedit" aria-label="Calda convencional e localizada por talhão" role="img"></canvas></div></div>
+        </div>
+      </section>
+
+      <!-- PDF -->
+      <section class="nd-secao" id="pdf">
+        <h2>Relatório em PDF</h2>
+        <p class="nota">Cabeçalho com o logo e a data, título em petróleo, números em destaque, tabela com total e rodapé com página. Só tema claro.</p>
+        <div class="duas">
+          <img class="pdf-prev" src="exemplo-pdf.png" alt="Primeira página do relatório de exemplo">
+          <div class="nd-pilha">
+            <button class="nd-btn primario" type="button" id="gerar-pdf"><svg class="nd-ic" aria-hidden="true"><use href="#i-download"/></svg>Gerar PDF de exemplo</button>
+            <p class="nota">Funciona com a página servida (GitHub Pages ou servidor local), não abrindo o arquivo direto do disco.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="nd-rodape">Fonte das regras: Design System “Nadiana” no claude.ai e o repositório <code>nadiana-design</code>.</footer>
+    </main>
+  </div>
+</div>
+
+<button class="nd-fab" type="button" data-nd-abrir="folha-demo"><svg class="nd-ic" aria-hidden="true"><use href="#i-plus"/></svg>Nova aplicação</button>
+
+<dialog class="nd-folha" id="folha-demo" aria-labelledby="folha-titulo">
+  <div class="alca"></div>
+  <div class="cab"><h2 id="folha-titulo">Nova aplicação</h2><button class="nd-btn icone leve" type="button" data-nd-fechar aria-label="Fechar"><svg class="nd-ic" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <form class="corpo" method="dialog">
+    <label class="nd-campo" for="f-talhao">Talhão<select class="nd-inp" id="f-talhao"><option>RT-52</option><option>RT-14</option><option>RT-07</option></select></label>
+    <label class="nd-campo" for="f-data">Data prevista<input class="nd-inp" id="f-data" type="date" value="2026-11-02"></label>
+    <button class="nd-btn primario grande" type="submit" id="f-salvar">Programar aplicação</button>
+  </form>
+</dialog>
+
+<script>
+const TK = window.NadianaTokens;
+function pintarCores(){
+  const tema = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  document.querySelectorAll("[data-grupo]").forEach(g => {
+    g.innerHTML = g.dataset.grupo.split(" ").map(n =>
+      `<div class="cor" style="--c:var(--${n})"><b></b><span>${n}<br><code>${TK[tema][n]}</code></span></div>`).join("");
+  });
+  const ic = document.getElementById("ic-tema"); if (ic) ic.setAttribute("href", tema === "dark" ? "#i-sun" : "#i-moon");
+}
+pintarCores();
+document.addEventListener("nd-tema", pintarCores);
+new MutationObserver(pintarCores).observe(document.documentElement, {attributes: true, attributeFilter: ["data-theme"]});
+
+document.getElementById("icones").innerHTML = window.NadianaIcones.map(n =>
+  `<div><svg class="nd-ic" aria-hidden="true"><use href="#i-${n}"/></svg>${n}</div>`).join("");
+
+/* Navegação: marca a seção visível */
+const links = [...document.querySelectorAll(".nd-nav a")];
+const alvos = links.map(a => document.querySelector(a.getAttribute("href")));
+addEventListener("scroll", () => {
+  let atual = 0; alvos.forEach((s, i) => { if (s.getBoundingClientRect().top < innerHeight * 0.4) atual = i; });
+  links.forEach((a, i) => i === atual ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
+}, {passive: true});
+
+document.getElementById("form-demo").addEventListener("submit", e => { e.preventDefault(); Nadiana.aviso("Execução da OS 4812 registrada"); });
+document.getElementById("ver-aviso").addEventListener("click", () => Nadiana.aviso("Execução registrada", {acao: "Desfazer", aoAgir: () => Nadiana.aviso("Lançamento desfeito", {icone: "info"})}));
+document.getElementById("f-salvar").addEventListener("click", () => setTimeout(() => Nadiana.aviso("Aplicação programada para 02/11/2026"), 50));
+
+/* Gráficos de exemplo */
+NadianaGraficos.aplicar();
+NadianaGraficos.registrar(new Chart(document.getElementById("g-produtos"), NadianaGraficos.barras({
+  horizontal: true, unidade: "L",
+  rotulos: ["Glifosato", "2,4-D", "Óleo mineral", "Fungicida A", "Inseticida B"],
+  series: [{nome: "Consumo", dados: [1285, 732, 571, 418, 236]}]
+})));
+NadianaGraficos.registrar(new Chart(document.getElementById("g-semanas"), NadianaGraficos.linhas({
+  unidade: "ha",
+  rotulos: ["29/09", "06/10", "13/10", "20/10", "27/10"],
+  series: [
+    {nome: "Pulverizador 1", dados: [182, 240, 211, 265, 248]},
+    {nome: "Pulverizador 2", dados: [120, 166, 198, 174, 205]},
+    {nome: "Pulverizador 3", dados: [64, 92, 81, 130, 118]}
+  ]
+})));
+NadianaGraficos.registrar(new Chart(document.getElementById("g-weedit"), NadianaGraficos.barras({
+  unidade: "L",
+  rotulos: ["RT-52", "RT-14", "RT-07", "RT-21"],
+  series: [
+    {nome: "Convencional", token: "graf-outros", dados: [3840, 5210, 4400, 2950]},
+    {nome: "WEED-IT", token: "graf-1", dados: [262, 498, 301, 177]}
+  ]
+})));
+
+document.getElementById("gerar-pdf").addEventListener("click", async () => {
+  try {
+    const r = await NadianaPDF.novo({titulo: "Aplicações da semana", subtitulo: "Fazenda Reata · soja 26/27 · 23/10 a 29/10/2026", logo: "logos/nadiana-logo.png"});
+    r.kpis([{rotulo: "Área aplicada", valor: "142,51", unidade: "ha"}, {rotulo: "Calda", valor: "12.702", unidade: "L"}, {rotulo: "Custo", valor: "R$ 7.113,32"}]);
+    r.secao("Produtos aplicados");
+    r.tabela({cabecalho: ["Produto", "Dose", "Área", "Total"], numericas: [1, 2, 3],
+      linhas: [["Glifosato", "2,0 L/ha", "142,51 ha", "285,0 L"], ["Óleo mineral", "0,5 L/ha", "142,51 ha", "71,3 L"], ["2,4-D", "1,5 L/ha", "88,20 ha", "132,3 L"]],
+      total: ["Total", "", "", "488,6 L"]});
+    r.secao("Observações");
+    r.texto("Aplicação do RT-14 adiada por vento acima de 12 km/h em 25/10. Reprogramada para 30/10/2026.");
+    window.__pdf = r.salvar(window.__semBaixar ? null : "nadiana-exemplo.pdf");
+    Nadiana.aviso("PDF gerado");
+  } catch (e) { Nadiana.aviso("Não deu para gerar o PDF: " + e.message, {icone: "circle-x"}); }
+});
+</script>
+</body>
+</html>
