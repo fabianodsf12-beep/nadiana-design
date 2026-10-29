@@ -2,7 +2,7 @@
 
 Regras visuais de todos os projetos da Nadiana Agropecuária: aplicativos de campo (Painel de aplicações, Lançamentos), relatórios (como o de aplicação localizada WEED-IT) e apresentações. Todo projeto novo parte daqui.
 
-A mesma base está publicada como Design System **Nadiana** no claude.ai: https://claude.ai/artifact/RJR1bMDsYXqaLHa9YU91JV. O `tokens.json` desta pasta é a cópia de lá, mais as cores de gráfico e as sombras da proposta de 29/10/2026, que ainda vão para o claude.ai depois de aprovadas.
+A mesma base está publicada como Design System **Nadiana** no claude.ai: https://claude.ai/artifact/RJR1bMDsYXqaLHa9YU91JV. O `tokens.json` desta pasta é o mesmo de lá; os componentes também estão lá, cada um com guia e prévia ao vivo.
 
 ## O que tem nesta pasta
 
