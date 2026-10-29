@@ -1,6 +1,6 @@
 # Projeto Nadiana
 
-Este projeto segue a base de design da Nadiana Agropecuária, publicada em https://fabianodsf12-beep.github.io/nadiana-design/v1/ (repositório `fabianodsf12-beep/nadiana-design`).
+Este projeto segue a base de design da Nadiana Agronegócios, publicada em https://fabianodsf12-beep.github.io/nadiana-design/v1/ (repositório `fabianodsf12-beep/nadiana-design`).
 
 ## Design: siga sempre a base Nadiana
 
@@ -17,7 +17,7 @@ Antes de criar ou mudar qualquer tela, relatório, PDF ou apresentação, leia a
 - Textos em português do Brasil, curtos, com os termos do campo; números no padrão brasileiro com unidade ("142,51 ha", "R$ 7.113,32", "12/10/2026"). Sem emojis.
 - Toda situação (atraso, aviso, concluído) tem palavra ou ícone, não só cor.
 - Contraste 4,5:1 nos dois temas; foco visível; alvos de toque de 44px ou mais.
-- Logo: arquivos de `v1/logos/` da base, sem recolorir; sobre fundo escuro, dentro de placa branca (`.nd-logo`).
+- Logo: arquivos de `v1/logos/` da base, sem recolorir. No cabeçalho, o símbolo (`nadiana-simbolo.svg`, classe `.nd-simbolo`), que funciona em fundo claro e escuro; o logo vertical com o nome em capas e na tela inicial, e em fundo escuro sempre na placa branca (`.nd-logo`).
 - Se o projeto precisar de algo que a base não tem, proponha incluir na base (repositório nadiana-design) em vez de criar só aqui.
 
 A mesma base está no claude.ai como Design System "Nadiana" (https://claude.ai/artifact/RJR1bMDsYXqaLHa9YU91JV). Ao fazer um desenho (Design) ou artifact, use esse design system.

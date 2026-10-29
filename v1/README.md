@@ -1,6 +1,6 @@
 # Nadiana: base de design
 
-Regras visuais de todos os projetos da Nadiana Agropecuária: aplicativos de campo (Painel de aplicações, Lançamentos), relatórios (como o de aplicação localizada WEED-IT) e apresentações. Todo projeto novo parte daqui.
+Regras visuais de todos os projetos da Nadiana Agronegócios: aplicativos de campo (Painel de aplicações, Lançamentos), relatórios (como o de aplicação localizada WEED-IT) e apresentações. Todo projeto novo parte daqui.
 
 A mesma base está publicada como Design System **Nadiana** no claude.ai: https://claude.ai/artifact/RJR1bMDsYXqaLHa9YU91JV. O `tokens.json` desta pasta é o mesmo de lá; os componentes também estão lá, cada um com guia e prévia ao vivo.
 
@@ -19,7 +19,7 @@ A mesma base está publicada como Design System **Nadiana** no claude.ai: https:
 | `vitrine.html` | Mostra tudo funcionando, nos dois temas. Abra para conferir. |
 | `modelo.html` | Página de partida para um app novo. |
 | `padrao-de-cores.png`, `exemplo-pdf.png` | Imagens de referência das cores e do relatório. |
-| `logos/` | Logo vertical, horizontal e símbolo (PNG, fundo branco). |
+| `logos/` | Logo vertical e símbolo, em SVG (telas e impressão) e PNG (PDF), com fundo transparente. |
 | `fonts/` | Barlow e Barlow Condensed em woff2. |
 
 ## Como usar num projeto novo
@@ -34,7 +34,7 @@ A base fica publicada em **https://fabianodsf12-beep.github.io/nadiana-design/v1
    <script src="https://fabianodsf12-beep.github.io/nadiana-design/v1/nadiana.js" defer></script>
    ```
    Com gráficos, acrescente o Chart.js 4.4.1 e `https://fabianodsf12-beep.github.io/nadiana-design/v1/graficos.js`. Com PDF, o jsPDF 2.5.1, o autoTable 3.8.2, `https://fabianodsf12-beep.github.io/nadiana-design/v1/tokens.js` e `https://fabianodsf12-beep.github.io/nadiana-design/v1/pdf.js`. As instruções de uso estão no topo de cada arquivo.
-2. Logos: `https://fabianodsf12-beep.github.io/nadiana-design/v1/logos/nadiana-logo.png`, `nadiana-logo-vertical.png` e `nadiana-simbolo.png`.
+2. Logos: `https://fabianodsf12-beep.github.io/nadiana-design/v1/logos/nadiana-simbolo.svg` e `nadiana-logo-vertical.svg` (os PNGs com o mesmo nome são para o PDF).
 3. Comece do `modelo.html` (troque os caminhos relativos pelo endereço acima).
 4. Copie `modelos/CLAUDE.md` do repositório nadiana-design para a raiz do projeto novo, para o Claude seguir estas regras lá.
 
@@ -44,14 +44,20 @@ Para mudar uma cor: altere no Design System do claude.ai (ou no `tokens.json`), 
 
 ## Marca
 
-- Logo **vertical** (`logos/nadiana-logo-vertical.png`, nome em `nadiana-petroleo`) em capas e telas de abertura. Logo **horizontal** (`logos/nadiana-logo.png`, nome em `nadiana-preto`) em cabeçalhos, na lateral e em rodapés. **Símbolo** (`logos/nadiana-simbolo.png`) para ícone de app, favicon, cabeçalho no celular e espaços pequenos, a partir de 24px de altura.
-- Os PNGs têm fundo branco: use sempre dentro de `.nd-logo`, a placa branca. No cabeçalho claro ela se confunde com o fundo; no tema escuro e na faixa de marca ela aparece como placa.
-- Respiro em volta de pelo menos metade da altura do símbolo. Não recolora, não estique, sem sombra nem contorno.
-- Falta o logo em vetor (SVG) com fundo transparente. Quando chegar, ele substitui os PNGs e a placa deixa de ser necessária.
+![Logo Nadiana Agronegócios](logos/nadiana-logo-vertical.svg)
+
+- O nome da empresa é **Nadiana Agronegócios**.
+- **Logo vertical** (`logos/nadiana-logo-vertical.svg`): folha com o "n", NADIANA em `nadiana-petroleo` e AGRONEGÓCIOS em verde. Use na capa, na tela inicial, na navegação lateral e em impressos. O nome é escuro: em fundo escuro (`nadiana-petroleo`, tema escuro), o logo vertical vai sempre na placa branca `.nd-logo`.
+- **Símbolo** (`logos/nadiana-simbolo.svg`): só a folha com o "n". Use no cabeçalho dos apps (`.nd-simbolo`), no cabeçalho do PDF, como ícone de app e favicon, a partir de 24px de altura. Funciona sem placa em fundo claro e escuro.
+- Não há versão horizontal: no cabeçalho, o símbolo vem ao lado do nome do app.
+- Os SVGs têm fundo transparente e podem ser ampliados para impressão, placa e fachada. Os PNGs com o mesmo nome existem só porque o gerador de PDF não lê SVG.
+- O "n" branco tem um contorno cinza bem fino, que faz parte do desenho: é ele que separa o "n" de um fundo branco.
+- Respiro em volta de pelo menos metade da altura do símbolo. Não recolora, não estique, sem sombra nem contorno extra.
+- `logos/nadiana-logo.png` é o logo horizontal antigo: fica só para não quebrar páginas antigas. Não use.
 
 ## Estrutura das telas
 
-- **Cabeçalho claro** (`.nd-topo`): fundo `panel`, logo à esquerda, nome do app e subtítulo, ações à direita. O verde não pinta o cabeçalho: ele fica para o que se toca (botão principal, item ativo, número de destaque).
+- **Cabeçalho claro** (`.nd-topo`): fundo `panel`, símbolo (`.nd-simbolo`) à esquerda, nome do app e subtítulo, ações à direita. O verde não pinta o cabeçalho: ele fica para o que se toca (botão principal, item ativo, número de destaque).
 - **Faixa de marca** (`.nd-faixa`): fundo `nadiana-petroleo`, só em capa, tela inicial e abertura de relatório.
 - **Navegação** (`.nd-app` + `.nd-nav`): barra embaixo no celular (até 5 itens, ícone e nome) e lateral a partir de 900px, com o logo no topo. A página atual leva `aria-current="page"`.
 - A ação principal da tela pode ir no botão flutuante `.nd-fab` no celular.
@@ -94,7 +100,8 @@ Use sempre a variável, nunca o código da cor solto no CSS.
 | `.nd-app`, `.nd-nav`, `.nd-conteudo` | Estrutura de app com navegação embaixo/lateral. |
 | `.nd-topo` | Cabeçalho claro com logo, nome do app e ações. |
 | `.nd-faixa` | Faixa de marca em petróleo (capa, tela inicial). |
-| `.nd-logo` (imgs `.h` e `.s`) | Logo na placa branca; `.h` horizontal, `.s` símbolo (aparece só no celular). |
+| `.nd-simbolo` | Símbolo (folha com o "n") sem placa: cabeçalho e ícone. |
+| `.nd-logo` | Placa branca para o logo vertical em fundo escuro (faixa, lateral). |
 | `.nd-ic` (`.p`, `.g`) | Ícone: `<svg class="nd-ic"><use href="#i-tractor"/></svg>`. |
 | `.nd-cartao` (`.grande`), `.nd-grade`, `.nd-pilha`, `.nd-secao` | Cartão e arranjos. `a.nd-cartao` sobe ao passar o mouse. |
 | `.nd-kpi`, `.nd-barra` | Rótulo + número grande com unidade + apoio; barra de progresso (`--v:68%`). |
@@ -138,9 +145,9 @@ Use sempre a variável, nunca o código da cor solto no CSS.
 
 ![Relatório de exemplo](exemplo-pdf.png)
 
-- A4, margem de 15mm. Cabeçalho com o logo horizontal e a data; traço verde curto; título em `nadiana-petroleo`.
+- A4, margem de 15mm. Cabeçalho com o símbolo e a data; traço verde curto; título em `nadiana-petroleo`.
 - Números em destaque em caixas (até 4 por linha), tabelas com cabeçalho em caixa alta, números à direita e linha de total.
-- Rodapé com "Nadiana Agropecuária", o título e "Página 1 de 2".
+- Rodapé com "Nadiana Agronegócios", o título e "Página 1 de 2".
 - Fonte Helvetica, porque o jsPDF não lê woff2. Só tema claro.
 
 ## Conteúdo e linguagem

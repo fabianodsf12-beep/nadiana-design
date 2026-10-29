@@ -44,7 +44,7 @@ main{display:flex;flex-direction:column;gap:calc(var(--space-6) * 1.5);padding-b
 <body>
 <div class="nd-app">
   <nav class="nd-nav" aria-label="Seções da vitrine">
-    <div class="marca"><span class="nd-logo"><img src="logos/nadiana-logo.png" alt="Nadiana"></span></div>
+    <div class="marca"><span class="nd-logo"><img src="logos/nadiana-logo-vertical.svg" alt="Nadiana Agronegócios"></span></div>
     <a href="#marca" aria-current="page"><svg class="nd-ic" aria-hidden="true"><use href="#i-sprout"/></svg>Marca</a>
     <a href="#cores"><svg class="nd-ic" aria-hidden="true"><use href="#i-droplets"/></svg>Cores</a>
     <a href="#componentes"><svg class="nd-ic" aria-hidden="true"><use href="#i-layout-dashboard"/></svg>Componentes</a>
@@ -55,7 +55,7 @@ main{display:flex;flex-direction:column;gap:calc(var(--space-6) * 1.5);padding-b
   <div class="nd-conteudo">
     <header class="nd-topo">
       <div class="nd-wrap">
-        <span class="nd-logo"><img class="h" src="logos/nadiana-logo.png" alt="Nadiana"><img class="s" src="logos/nadiana-simbolo.png" alt="Nadiana"></span>
+        <img class="nd-simbolo" src="logos/nadiana-simbolo.svg" alt="Nadiana">
         <div class="app"><h1>Vitrine Nadiana</h1><p>Base de design de todos os projetos</p></div>
         <div class="acoes">
           <span class="nd-net"><i></i>Conectado</span>
@@ -69,14 +69,14 @@ main{display:flex;flex-direction:column;gap:calc(var(--space-6) * 1.5);padding-b
       <section class="nd-secao" id="marca">
         <h2>Marca</h2>
         <div class="logos">
-          <img src="logos/nadiana-logo-vertical.png" alt="Nadiana, logo vertical">
-          <img src="logos/nadiana-logo.png" alt="Nadiana, logo horizontal" style="height:40px">
-          <img src="logos/nadiana-simbolo.png" alt="Nadiana, símbolo">
+          <img src="logos/nadiana-logo-vertical.svg" alt="Nadiana Agronegócios, logo vertical" style="height:120px">
+          <img src="logos/nadiana-simbolo.svg" alt="Nadiana, símbolo" style="height:72px">
+          <img src="logos/nadiana-simbolo.svg" alt="Nadiana, símbolo pequeno" style="height:32px">
         </div>
-        <p class="nota">Cabeçalho dos apps: claro, com o logo horizontal (no celular, só o símbolo). O verde fica para o que se toca. Capas, tela inicial e abertura de relatório usam a faixa de marca em petróleo:</p>
+        <p class="nota">Cabeçalho dos apps: claro, com o símbolo, que funciona sem placa em fundo claro e escuro. O verde fica para o que se toca. O logo vertical, com o nome, vai na capa, na tela inicial e na navegação lateral; em fundo escuro, sempre na placa branca:</p>
         <div class="faixa-demo">
           <div class="nd-faixa"><div class="nd-wrap">
-            <span class="nd-logo"><img src="logos/nadiana-logo.png" alt="Nadiana"></span>
+            <span class="nd-logo"><img src="logos/nadiana-logo-vertical.svg" alt="Nadiana Agronegócios"></span>
             <h1>Aplicações da safra</h1><p>Fazenda Reata, soja 26/27</p>
           </div></div>
         </div>
@@ -338,7 +338,7 @@ NadianaGraficos.registrar(new Chart(document.getElementById("g-weedit"), Nadiana
 
 document.getElementById("gerar-pdf").addEventListener("click", async () => {
   try {
-    const r = await NadianaPDF.novo({titulo: "Aplicações da semana", subtitulo: "Fazenda Reata · soja 26/27 · 23/10 a 29/10/2026", logo: "logos/nadiana-logo.png"});
+    const r = await NadianaPDF.novo({titulo: "Aplicações da semana", subtitulo: "Fazenda Reata · soja 26/27 · 23/10 a 29/10/2026", logo: "logos/nadiana-simbolo.png"});
     r.kpis([{rotulo: "Área aplicada", valor: "142,51", unidade: "ha"}, {rotulo: "Calda", valor: "12.702", unidade: "L"}, {rotulo: "Custo", valor: "R$ 7.113,32"}]);
     r.secao("Produtos aplicados");
     r.tabela({cabecalho: ["Produto", "Dose", "Área", "Total"], numericas: [1, 2, 3],

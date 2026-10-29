@@ -1,6 +1,6 @@
 # Nadiana · base de design
 
-Cores, fontes, logos, componentes, ícones, gráficos e PDF de todos os projetos da Nadiana Agropecuária.
+Cores, fontes, logos, componentes, ícones, gráficos e PDF de todos os projetos da Nadiana Agronegócios.
 
 - **Endereço publicado:** https://fabianodsf12-beep.github.io/nadiana-design/v1/
 - **Vitrine** (tudo funcionando, nos dois temas): https://fabianodsf12-beep.github.io/nadiana-design/v1/vitrine.html

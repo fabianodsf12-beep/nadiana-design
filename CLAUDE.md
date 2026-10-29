@@ -1,6 +1,6 @@
 # Base de design Nadiana
 
-Este repositório é a base de design de todos os projetos da Nadiana Agropecuária, publicada no GitHub Pages em https://fabianodsf12-beep.github.io/nadiana-design/v1/. Vários apps carregam estes arquivos direto desse endereço: uma mudança aqui aparece em todos eles.
+Este repositório é a base de design de todos os projetos da Nadiana Agronegócios, publicada no GitHub Pages em https://fabianodsf12-beep.github.io/nadiana-design/v1/. Vários apps carregam estes arquivos direto desse endereço: uma mudança aqui aparece em todos eles.
 
 ## Ao mudar a base
 

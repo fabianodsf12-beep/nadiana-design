@@ -22,7 +22,10 @@ h1,h2,h3{text-wrap:balance}
 .nd-ic{width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
 .nd-ic.p{width:16px;height:16px}.nd-ic.g{width:24px;height:24px}
 
-/* Logo PNG (fundo branco): sempre sobre placa branca. No cabeçalho claro a placa some no fundo. */
+/* Símbolo (folha com o "n"): funciona sem placa em fundo claro e escuro. Cabeçalho, navegação no celular, ícone. */
+.nd-simbolo{display:block;height:34px;width:auto;flex-shrink:0}
+a:has(> .nd-simbolo){display:inline-flex;flex-shrink:0;border-radius:var(--radius-md)}
+/* Logo vertical (com NADIANA e AGRONEGÓCIOS): o nome é escuro, então em fundo escuro vai na placa branca .nd-logo */
 .nd-logo{display:inline-flex;align-items:center;background:#FFFFFF;border-radius:var(--radius-md);padding:6px 8px;flex-shrink:0;text-decoration:none}
 .nd-logo img{display:block;height:22px;width:auto}
 .nd-logo .s{display:none}
@@ -54,18 +57,20 @@ h1,h2,h3{text-wrap:balance}
   .nd-app{display:grid;grid-template-columns:240px minmax(0,1fr)}
   .nd-nav{position:sticky;top:0;height:100vh;flex-direction:column;gap:2px;border-top:0;border-right:1px solid var(--line2);box-shadow:none;padding:var(--space-4) var(--space-3)}
   .nd-nav .marca{display:block;padding:var(--space-2) var(--space-2) var(--space-5)}
-  .nd-nav .marca img{display:block;height:24px;width:auto}
+  .nd-nav .marca img{display:block;height:56px;width:auto}
   .nd-nav a{flex:0 0 auto;flex-direction:row;justify-content:flex-start;gap:var(--space-3);min-height:44px;padding:0 var(--space-3);font-size:15px;font-weight:500}
   .nd-nav a .nd-ic{width:20px;height:20px;padding:0;background:none!important}
   .nd-nav a:hover{background:var(--panel2);color:var(--ink)}
   .nd-nav a[aria-current="page"]{background:var(--brand-soft);color:var(--ink);font-weight:600}
   .nd-nav a[aria-current="page"] .nd-ic{color:var(--brand)}
   .nd-conteudo{padding-bottom:var(--space-6)}
-  .nd-app .nd-topo .nd-logo{display:none}
+  .nd-app .nd-topo .nd-logo,.nd-app .nd-topo .nd-simbolo{display:none}
   .nd-app .nd-topo .app{padding-left:0;border-left:0}
 }
-/* No tema escuro o logo da lateral fica numa placa branca */
-.nd-nav .marca .nd-logo img{height:22px}
+/* Logo vertical na lateral e na faixa de marca, dentro da placa branca */
+.nd-nav .marca .nd-logo{padding:8px 10px}
+.nd-faixa .nd-logo{padding:10px 14px}
+.nd-faixa .nd-logo img{height:72px}
 
 /* Abas no topo de uma área (trocar de visão dentro da página) */
 .nd-abas{display:flex;gap:var(--space-1);border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}

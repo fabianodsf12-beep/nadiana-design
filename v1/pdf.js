@@ -5,7 +5,7 @@
    <script src="https://fabianodsf12-beep.github.io/nadiana-design/v1/pdf.js"></script>
 
    const r = await NadianaPDF.novo({titulo: "Aplicações da semana", subtitulo: "Fazenda Reata · soja 26/27",
-                                    logo: "https://fabianodsf12-beep.github.io/nadiana-design/v1/logos/nadiana-logo.png"});
+                                    logo: "https://fabianodsf12-beep.github.io/nadiana-design/v1/logos/nadiana-simbolo.png"});
    r.kpis([{rotulo: "Área aplicada", valor: "142,51", unidade: "ha"}, ...]);
    r.secao("Produtos");
    r.tabela({cabecalho: ["Produto","Dose","Total"], linhas: [...], numericas: [1,2], total: ["Total","","488,6 L"]});
@@ -49,7 +49,7 @@
 
         function cabecalho(){
           var y = M;
-          if (logo) { var lh = 7, lw = lh * logo.w / logo.h; doc.addImage(logo.url, "PNG", M, y, lw, lh); }
+          if (logo) { var lh = 9, lw = lh * logo.w / logo.h; doc.addImage(logo.url, "PNG", M, y, lw, lh); }
           else { doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor.apply(doc, C.petroleo); doc.text("NADIANA", M, y + 5); }
           doc.setFont("helvetica","normal"); doc.setFontSize(8.5); doc.setTextColor.apply(doc, C.muted);
           doc.text("Gerado em " + hoje(), W - M, y + 4.5, {align: "right"});
@@ -118,7 +118,7 @@
             doc.setPage(p);
             doc.setDrawColor.apply(doc, C.line2); doc.setLineWidth(0.2); doc.line(M, H - M, W - M, H - M);
             doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor.apply(doc, C.muted);
-            doc.text("Nadiana Agropecuária" + (op.titulo ? " · " + op.titulo : ""), M, H - M + 4.5);
+            doc.text("Nadiana Agronegócios" + (op.titulo ? " · " + op.titulo : ""), M, H - M + 4.5);
             doc.text("Página " + p + " de " + n, W - M, H - M + 4.5, {align: "right"});
           }
           if (nome) doc.save(nome);
