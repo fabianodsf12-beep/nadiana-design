@@ -20,7 +20,7 @@ A mesma base está publicada como Design System **Nadiana** no claude.ai: https:
 | `modelo.html` | Página de partida para um app novo. |
 | `padrao-de-cores.png`, `exemplo-pdf.png` | Imagens de referência das cores e do relatório. |
 | `logos/` | Logo vertical e símbolo, em SVG (telas e impressão) e PNG (PDF), com fundo transparente. |
-| `fonts/` | Barlow e Barlow Condensed em woff2. |
+| `fonts/` | Barlow e Barlow Condensed em woff2 (telas) e em TTF (PDF). |
 
 ## Como usar num projeto novo
 
@@ -169,7 +169,7 @@ Funções em `nadiana.js`:
 - A4, margem de 15mm. Cabeçalho com o símbolo e a data; traço verde curto; título em `nadiana-petroleo`.
 - Números em destaque em caixas (até 4 por linha), tabelas com cabeçalho em caixa alta, números à direita e linha de total.
 - Rodapé com "Nadiana Agronegócios", o título e "Página 1 de 2".
-- Fonte Helvetica, porque o jsPDF não lê woff2. Só tema claro.
+- Fontes da marca: Barlow no texto e Barlow Condensed no título e nos números. Como o jsPDF não lê woff2, `pdf.js` lê as versões TTF em `fonts/` (`Barlow-400.ttf`, `Barlow-600.ttf`, `BarlowCondensed-600.ttf`); se não conseguir (página aberta direto do disco, sem rede), o relatório sai em Helvetica. Só tema claro.
 
 ## Conteúdo e linguagem
 
