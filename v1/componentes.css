@@ -243,11 +243,11 @@ a.nd-lista-item:hover,.nd-lista > a:hover{background:var(--panel2);margin-inline
 .nd-onda{position:relative;overflow:hidden;isolation:isolate}
 .nd-onda-gota{position:absolute;border-radius:50%;background:currentColor;opacity:.25;transform:scale(0);pointer-events:none;z-index:-1;animation:nd-gota 560ms var(--curva) forwards}
 @keyframes nd-gota{to{transform:scale(1);opacity:0}}
-/* Ícone que se mexe no botão: .seta avança, .gira gira, .desce desce */
-.nd-btn .seta,.nd-btn .gira,.nd-btn .desce{transition:transform var(--dur-media) var(--curva-mola)}
-.nd-btn:hover .seta,.nd-btn:focus-visible .seta{transform:translateX(4px)}
-.nd-btn:hover .gira,.nd-btn:focus-visible .gira{transform:rotate(90deg)}
-.nd-btn:hover .desce,.nd-btn:focus-visible .desce{transform:translateY(3px)}
+/* Ícone que se mexe em qualquer botão ou link: .seta avança, .gira gira, .desce desce */
+.seta,.gira,.desce{transition:transform var(--dur-media) var(--curva-mola)}
+:is(button,a):is(:hover,:focus-visible) .seta{transform:translateX(4px)}
+:is(button,a):is(:hover,:focus-visible) .gira{transform:rotate(90deg)}
+:is(button,a):is(:hover,:focus-visible) .desce{transform:translateY(3px)}
 /* Botão com estado: Salvar → Enviando… → Salvo (Nadiana.estado) */
 .nd-estado{display:inline-grid;min-width:180px}
 .nd-estado > span{grid-area:1/1;display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);transition:opacity var(--dur-media) var(--curva),transform var(--dur-media) var(--curva)}
@@ -264,11 +264,11 @@ a.nd-lista-item:hover,.nd-lista > a:hover{background:var(--panel2);margin-inline
 .nd-segurar:hover{background:var(--panel);border-color:var(--bad)}
 .nd-segurar .enche{position:absolute;inset:0;background:var(--bad-bg);transform:scaleX(var(--p,0));transform-origin:left;z-index:-1;pointer-events:none}
 .nd-segurar.volta .enche{transition:transform var(--dur-lenta) var(--curva)}
-/* Seletor com pílula que desliza */
-.nd-seg.desliza{position:relative}
-.nd-seg.desliza .pilula{position:absolute;top:3px;bottom:3px;left:0;width:0;border-radius:var(--radius-md);background:var(--panel);box-shadow:var(--sombra-1);transition:transform 380ms var(--curva-mola),width 380ms var(--curva-mola);pointer-events:none}
-.nd-seg.desliza button{position:relative;z-index:1}
-.nd-seg.desliza button[aria-pressed="true"]{background:transparent;box-shadow:none}
+/* Seletor com pílula que desliza: .nd-seg.desliza, ou .nd-desliza num seletor próprio (botões com aria-pressed, 3px de respiro) */
+:is(.nd-seg.desliza,.nd-desliza){position:relative}
+:is(.nd-seg.desliza,.nd-desliza) > .pilula{position:absolute;top:3px;bottom:3px;left:0;width:0;border-radius:var(--radius-md);background:var(--panel);box-shadow:var(--sombra-1);transition:transform 380ms var(--curva-mola),width 380ms var(--curva-mola);pointer-events:none}
+:is(.nd-seg.desliza,.nd-desliza) > button{position:relative;z-index:1}
+:is(.nd-seg.desliza,.nd-desliza) > button[aria-pressed="true"]{background:transparent;box-shadow:none}
 /* Confirmação com visto desenhado (Nadiana.feito) */
 .nd-feito{display:flex;flex-direction:column;align-items:center;gap:var(--space-2);text-align:center;padding-block:var(--space-3)}
 .nd-feito svg{width:76px;height:76px}

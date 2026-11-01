@@ -132,10 +132,10 @@ Movimento serve para confirmar que o app recebeu o toque, e não para enfeitar. 
 | Classe ou atributo | O que faz | Onde usar |
 | --- | --- | --- |
 | `.nd-onda` | Uma onda sai do ponto tocado. | Todos os botões e itens tocáveis. |
-| `.seta`, `.gira`, `.desce` (no `svg` do ícone) | O ícone avança, gira ou desce ao passar o mouse ou focar. | Botões com ícone: seta para avançar, + para criar, seta de baixar. |
+| `.seta`, `.gira`, `.desce` (no `svg` do ícone, em qualquer botão ou link) | O ícone avança, gira ou desce ao passar o mouse ou focar. | Botões com ícone: seta para avançar, + para criar, seta de baixar. |
 | `.nd-estado` | O botão mostra "Enviando…" e depois "Salvo", com o visto desenhado. Fica bloqueado enquanto envia, o que evita lançar em dobro. Textos em `data-enviando` e `data-feito`. | Todo botão que salva na planilha. |
 | `.nd-segurar` | Enche enquanto o dedo fica apertado (1,2 s, ou `data-tempo`). Soltar antes cancela. Ao encher, dispara o evento `nd-confirma`. | Excluir lançamento e outras ações que não se desfazem; substitui a janela "Tem certeza?". Ofereça "Desfazer" no aviso. |
-| `.nd-seg.desliza` | A pílula do seletor escorrega até a opção escolhida. | Seletores de 2 a 4 opções. |
+| `.nd-seg.desliza` (ou `.nd-desliza` num seletor próprio, com botões `aria-pressed` e 3px de respiro) | A pílula do seletor escorrega até a opção escolhida; ela se reposiciona sozinha quando o seletor aparece ou quando a página muda a opção. | Seletores de 2 a 4 opções. |
 | `data-nd-conta="12702"` (`data-casas` para decimais) | O número sobe até o valor quando aparece na tela. Escreva o valor final no HTML: sem script, ele já aparece certo. | Números em destaque (`Numero`). |
 | `.nd-feito` | Visto desenhado com título e apoio. | Depois de salvar algo importante, como a execução de uma OS. |
 | `.nd-net.vivo` | O ponto pulsa enquanto os dados estão em dia; com `.ocupado` ou `.erro`, para. | Indicador de conexão no cabeçalho. |

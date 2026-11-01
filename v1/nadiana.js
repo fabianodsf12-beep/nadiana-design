@@ -135,17 +135,23 @@
   document.addEventListener("pointerout", function(e){ if (seg.b && e.target.closest && e.target.closest(".nd-segurar") === seg.b && !seg.b.contains(e.relatedTarget)) para(); });
   document.addEventListener("contextmenu", function(e){ if (e.target.closest && e.target.closest(".nd-segurar")) e.preventDefault(); });
 
-  /* Seletor com pílula que desliza: .nd-seg.desliza (a pílula é criada aqui) */
+  /* Seletor com pílula que desliza: .nd-seg.desliza ou .nd-desliza (a pílula é criada aqui).
+     Ela se reposiciona ao tocar, quando o seletor aparece ou muda de tamanho e quando a página troca o aria-pressed */
+  var obsTam = window.ResizeObserver ? new ResizeObserver(function(){ requestAnimationFrame(pilulas); }) : null;
+  var obsMarca = new MutationObserver(function(){ requestAnimationFrame(pilulas); });
   function pilulas(){
-    document.querySelectorAll(".nd-seg.desliza").forEach(function(g){
+    document.querySelectorAll(".nd-seg.desliza, .nd-desliza").forEach(function(g){
       var p = g.querySelector(":scope > .pilula");
       if (!p) { p = document.createElement("i"); p.className = "pilula"; p.setAttribute("aria-hidden", "true"); g.prepend(p); }
-      var b = g.querySelector('button[aria-pressed="true"]'); if (!b) return;
-      p.style.width = b.offsetWidth + "px"; p.style.transform = "translateX(" + b.offsetLeft + "px)";
+      if (!g._ndObs) { g._ndObs = 1; if (obsTam) obsTam.observe(g); obsMarca.observe(g, {attributes: true, subtree: true, attributeFilter: ["aria-pressed"]}); }
+      var b = g.querySelector(':scope > button[aria-pressed="true"]'); if (!b || !b.offsetWidth) return;
+      var w = b.offsetWidth + "px", t = "translateX(" + b.offsetLeft + "px)";
+      if (p.style.width !== w) p.style.width = w;
+      if (p.style.transform !== t) p.style.transform = t;
     });
   }
   N.pilulas = pilulas;
-  document.addEventListener("click", function(e){ if (e.target.closest && e.target.closest(".nd-seg.desliza")) requestAnimationFrame(pilulas); });
+  document.addEventListener("click", function(e){ if (e.target.closest && e.target.closest(".nd-seg.desliza, .nd-desliza")) requestAnimationFrame(pilulas); });
   addEventListener("resize", pilulas);
   quando(function(){ pilulas(); if (document.fonts) document.fonts.ready.then(pilulas); });
 
