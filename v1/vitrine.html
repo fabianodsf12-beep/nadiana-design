@@ -58,7 +58,7 @@ main{display:flex;flex-direction:column;gap:calc(var(--space-6) * 1.5);padding-b
         <img class="nd-simbolo" src="logos/nadiana-simbolo.svg" alt="Nadiana">
         <div class="app"><h1>Vitrine Nadiana</h1><p>Base de design de todos os projetos</p></div>
         <div class="acoes">
-          <span class="nd-net"><i></i>Conectado</span>
+          <span class="nd-net vivo"><i></i>Conectado</span>
           <button class="nd-btn icone leve" type="button" data-nd-tema aria-label="Trocar tema claro/escuro"><svg class="nd-ic" aria-hidden="true"><use id="ic-tema" href="#i-moon"/></svg></button>
         </div>
       </div>
@@ -132,6 +132,36 @@ main{display:flex;flex-direction:column;gap:calc(var(--space-6) * 1.5);padding-b
           <button class="nd-btn" type="button" disabled>Enviando…</button>
         </div>
         <p class="nota">No celular, a ação principal da tela pode ficar no botão flutuante <code>.nd-fab</code> (canto de baixo, acima da navegação).</p>
+      </section>
+
+      <section class="nd-secao" id="movimento">
+        <h2>Movimento</h2>
+        <p class="nota">Resposta imediata ao toque, para o operador ter certeza de que o app recebeu o comando. Quem pede menos movimento no aparelho vê tudo parado.</p>
+        <div class="linha">
+          <button class="nd-btn primario nd-onda" type="button">Programar aplicação</button>
+          <button class="nd-btn nd-onda" type="button">Abrir painel<svg class="nd-ic seta" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+          <button class="nd-btn nd-onda" type="button"><svg class="nd-ic gira" aria-hidden="true"><use href="#i-plus"/></svg>Novo talhão</button>
+          <button class="nd-btn nd-onda" type="button"><svg class="nd-ic desce" aria-hidden="true"><use href="#i-download"/></svg>Baixar PDF</button>
+        </div>
+        <p class="nota"><code>.nd-onda</code>: a onda sai do ponto tocado. <code>.seta</code>, <code>.gira</code> e <code>.desce</code> no ícone: ele se mexe ao passar o mouse ou focar.</p>
+        <div class="linha">
+          <button class="nd-btn primario nd-estado nd-onda" type="button" id="mv-salvar" data-feito="Salvo"><svg class="nd-ic" aria-hidden="true"><use href="#i-check"/></svg>Salvar execução</button>
+          <button class="nd-btn nd-segurar" type="button" id="mv-excluir"><svg class="nd-ic" aria-hidden="true"><use href="#i-trash-2"/></svg>Segure para excluir</button>
+        </div>
+        <p class="nota"><code>.nd-estado</code>: o botão mostra "Enviando…" e "Salvo" com <code>Nadiana.estado(botao, "enviando")</code> e <code>"feito"</code>, e fica bloqueado enquanto envia. <code>.nd-segurar</code>: segure até encher; ao completar, dispara o evento <code>nd-confirma</code>.</p>
+        <div class="nd-seg desliza" role="group" aria-label="Modalidade">
+          <button type="button" aria-pressed="true">Todas</button>
+          <button type="button" aria-pressed="false">Terrestre</button>
+          <button type="button" aria-pressed="false">Aérea</button>
+        </div>
+        <p class="nota"><code>.nd-seg.desliza</code>: a pílula escorrega até a opção escolhida.</p>
+        <div class="duas">
+          <div class="nd-cartao"><div class="nd-kpi"><span class="rot"><svg class="nd-ic p" aria-hidden="true"><use href="#i-droplets"/></svg>Calda aplicada</span><span class="val"><span data-nd-conta="12702">12.702</span><small>L</small></span><span class="var">R$ <span data-nd-conta="7113.32" data-casas="2">7.113,32</span> em produtos</span></div>
+            <div><button class="nd-btn leve nd-onda" type="button" id="mv-conta"><svg class="nd-ic" aria-hidden="true"><use href="#i-refresh-cw"/></svg>Contar de novo</button></div></div>
+          <div class="nd-cartao"><div class="nd-feito" id="mv-feito"><svg viewBox="0 0 76 76" aria-hidden="true"><circle cx="38" cy="38" r="34" pathLength="1"/><path d="M24 39l10 10 19-21" pathLength="1"/></svg><b>Execução registrada</b><span class="nd-corpo-pequeno nd-muted">OS 4812 · RT-52 · 38,4 ha</span></div>
+            <div><button class="nd-btn leve nd-onda" type="button" id="mv-feito-b"><svg class="nd-ic" aria-hidden="true"><use href="#i-refresh-cw"/></svg>Ver de novo</button></div></div>
+        </div>
+        <p class="nota"><code>data-nd-conta</code>: o número sobe até o valor quando aparece; <code>Nadiana.contar(el, novoValor)</code> conta até um valor novo. <code>.nd-feito</code>: visto desenhado; <code>Nadiana.feito(el)</code> toca de novo e vibra de leve no Android. <code>.nd-net.vivo</code> (no topo desta página): o ponto pulsa enquanto os dados estão em dia.</p>
       </section>
 
       <section class="nd-secao">
@@ -307,6 +337,12 @@ addEventListener("scroll", () => {
   links.forEach((a, i) => i === atual ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
 }, {passive: true});
 
+/* Movimento */
+const mvSalvar = document.getElementById("mv-salvar");
+mvSalvar.addEventListener("click", () => { Nadiana.estado(mvSalvar, "enviando"); setTimeout(() => Nadiana.estado(mvSalvar, "feito"), 1300); });
+document.getElementById("mv-excluir").addEventListener("nd-confirma", () => Nadiana.aviso("Lançamento excluído", {acao: "Desfazer", aoAgir: () => Nadiana.aviso("Lançamento recuperado", {icone: "info"})}));
+document.getElementById("mv-conta").addEventListener("click", () => document.querySelectorAll("#movimento [data-nd-conta]").forEach(el => { el._ndValor = 0; Nadiana.contar(el); }));
+document.getElementById("mv-feito-b").addEventListener("click", () => Nadiana.feito(document.getElementById("mv-feito")));
 document.getElementById("form-demo").addEventListener("submit", e => { e.preventDefault(); Nadiana.aviso("Execução da OS 4812 registrada"); });
 document.getElementById("ver-aviso").addEventListener("click", () => Nadiana.aviso("Execução registrada", {acao: "Desfazer", aoAgir: () => Nadiana.aviso("Lançamento desfeito", {icone: "info"})}));
 document.getElementById("f-salvar").addEventListener("click", () => setTimeout(() => Nadiana.aviso("Aplicação programada para 02/11/2026"), 50));

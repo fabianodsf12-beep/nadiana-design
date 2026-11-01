@@ -1,7 +1,7 @@
 /* Nadiana — base e componentes. Usa só os tokens de tokens.css (carregue tokens.css antes deste). */
 
 /* Movimento: tempos e curva padrão */
-:root{--dur-rapida:120ms;--dur-media:200ms;--dur-lenta:320ms;--curva:cubic-bezier(.2,.8,.2,1);--nav-altura:64px}
+:root{--dur-rapida:120ms;--dur-media:200ms;--dur-lenta:320ms;--curva:cubic-bezier(.2,.8,.2,1);--curva-mola:cubic-bezier(.34,1.56,.64,1);--nav-altura:64px}
 
 /* Base */
 *,*::before,*::after{box-sizing:border-box}
@@ -103,7 +103,7 @@ a.nd-cartao:hover,button.nd-cartao:hover{border-color:var(--line);box-shadow:var
 /* Botões */
 .nd-btn{min-height:44px;padding:0 var(--space-4);border:1px solid var(--line);border-radius:var(--radius-md);background:var(--panel);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);font-size:15px;font-weight:500;white-space:nowrap;text-decoration:none;transition:background var(--dur-rapida) var(--curva),border-color var(--dur-rapida) var(--curva),transform var(--dur-rapida) var(--curva)}
 .nd-btn:hover{border-color:var(--muted);background:var(--panel2)}
-.nd-btn:active{transform:scale(.98)}
+.nd-btn:active{transform:scale(.97)}
 .nd-btn.primario{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:600}
 .nd-btn.primario:hover{filter:brightness(1.1)}
 .nd-btn.leve{border-color:transparent;background:transparent}
@@ -237,5 +237,53 @@ a.nd-lista-item:hover,.nd-lista > a:hover{background:var(--panel2);margin-inline
 
 /* Rodapé */
 .nd-rodape{font-size:12.5px;color:var(--muted);padding-block:var(--space-6)}
+
+/* ---------- Movimento ---------- */
+/* Toque com onda: a onda sai do ponto tocado (nadiana.js) */
+.nd-onda{position:relative;overflow:hidden;isolation:isolate}
+.nd-onda-gota{position:absolute;border-radius:50%;background:currentColor;opacity:.25;transform:scale(0);pointer-events:none;z-index:-1;animation:nd-gota 560ms var(--curva) forwards}
+@keyframes nd-gota{to{transform:scale(1);opacity:0}}
+/* Ícone que se mexe no botão: .seta avança, .gira gira, .desce desce */
+.nd-btn .seta,.nd-btn .gira,.nd-btn .desce{transition:transform var(--dur-media) var(--curva-mola)}
+.nd-btn:hover .seta,.nd-btn:focus-visible .seta{transform:translateX(4px)}
+.nd-btn:hover .gira,.nd-btn:focus-visible .gira{transform:rotate(90deg)}
+.nd-btn:hover .desce,.nd-btn:focus-visible .desce{transform:translateY(3px)}
+/* Botão com estado: Salvar → Enviando… → Salvo (Nadiana.estado) */
+.nd-estado{display:inline-grid;min-width:180px}
+.nd-estado > span{grid-area:1/1;display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);transition:opacity var(--dur-media) var(--curva),transform var(--dur-media) var(--curva)}
+.nd-estado .env,.nd-estado .ok{opacity:0;transform:translateY(8px)}
+.nd-estado[data-estado="enviando"] .rot,.nd-estado[data-estado="feito"] .rot{opacity:0;transform:translateY(-8px)}
+.nd-estado[data-estado="enviando"] .env,.nd-estado[data-estado="feito"] .ok{opacity:1;transform:none}
+.nd-estado[data-estado="enviando"],.nd-estado[data-estado="enviando"]:disabled{cursor:progress;opacity:1}
+.nd-estado .ok path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 420ms var(--curva) 120ms}
+.nd-estado[data-estado="feito"] .ok path{stroke-dashoffset:0}
+.nd-giro{width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:nd-gira 700ms linear infinite;flex-shrink:0}
+@keyframes nd-gira{to{transform:rotate(360deg)}}
+/* Segurar para confirmar: enche enquanto o dedo fica apertado (evento nd-confirma) */
+.nd-segurar{position:relative;overflow:hidden;isolation:isolate;color:var(--bad);border-color:var(--bad);touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.nd-segurar:hover{background:var(--panel);border-color:var(--bad)}
+.nd-segurar .enche{position:absolute;inset:0;background:var(--bad-bg);transform:scaleX(var(--p,0));transform-origin:left;z-index:-1;pointer-events:none}
+.nd-segurar.volta .enche{transition:transform var(--dur-lenta) var(--curva)}
+/* Seletor com pílula que desliza */
+.nd-seg.desliza{position:relative}
+.nd-seg.desliza .pilula{position:absolute;top:3px;bottom:3px;left:0;width:0;border-radius:var(--radius-md);background:var(--panel);box-shadow:var(--sombra-1);transition:transform 380ms var(--curva-mola),width 380ms var(--curva-mola);pointer-events:none}
+.nd-seg.desliza button{position:relative;z-index:1}
+.nd-seg.desliza button[aria-pressed="true"]{background:transparent;box-shadow:none}
+/* Confirmação com visto desenhado (Nadiana.feito) */
+.nd-feito{display:flex;flex-direction:column;align-items:center;gap:var(--space-2);text-align:center;padding-block:var(--space-3)}
+.nd-feito svg{width:76px;height:76px}
+.nd-feito circle{fill:var(--brand-soft);stroke:var(--nadiana-verde);stroke-width:3;stroke-dasharray:1;stroke-dashoffset:0}
+.nd-feito path{fill:none;stroke:var(--ok);stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0}
+.nd-feito b{font-family:var(--font-display);font-size:22px;font-weight:600}
+.nd-feito.toca svg{animation:nd-pula 480ms var(--curva-mola) both}
+.nd-feito.toca circle{animation:nd-desenha 520ms var(--curva) both}
+.nd-feito.toca path{animation:nd-desenha 380ms var(--curva) 360ms both}
+@keyframes nd-desenha{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes nd-pula{from{transform:scale(0)}to{transform:scale(1)}}
+/* Ponto "ao vivo": pulsa enquanto os dados estão em dia; com .erro ou .ocupado, para */
+.nd-net.vivo i{position:relative}
+.nd-net.vivo i::after{content:"";position:absolute;inset:0;border-radius:50%;background:inherit;animation:nd-ping 1.8s var(--curva) infinite}
+.nd-net.vivo.erro i::after,.nd-net.vivo.ocupado i::after{display:none}
+@keyframes nd-ping{from{transform:scale(1);opacity:.7}to{transform:scale(2.8);opacity:0}}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}

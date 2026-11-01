@@ -75,5 +75,104 @@
     if (e.target.matches && e.target.matches("dialog.nd-folha")) e.target.close();
   });
 
+  /* ---------- Movimento ---------- */
+  var calmo = function(){ return matchMedia("(prefers-reduced-motion: reduce)").matches; };
+  var vibra = function(ms){ try { if (navigator.vibrate) navigator.vibrate(ms); } catch(e) {} };
+  var quando = function(fn){ if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn); else fn(); };
+
+  /* Toque com onda: qualquer elemento com .nd-onda */
+  document.addEventListener("pointerdown", function(e){
+    var b = e.target.closest && e.target.closest(".nd-onda"); if (!b || calmo() || b.disabled) return;
+    var r = b.getBoundingClientRect(), d = Math.max(r.width, r.height) * 2.2, g = document.createElement("span");
+    g.className = "nd-onda-gota";
+    g.style.cssText = "width:" + d + "px;height:" + d + "px;left:" + (e.clientX - r.left - d / 2) + "px;top:" + (e.clientY - r.top - d / 2) + "px";
+    b.appendChild(g); g.addEventListener("animationend", function(){ g.remove(); });
+  });
+
+  /* Botão com estado: <button class="nd-btn primario nd-estado" data-enviando="Enviando…" data-feito="Salvo">Salvar execução</button>
+     Nadiana.estado(botao, "enviando") → Nadiana.estado(botao, "feito") (volta sozinho) ou Nadiana.estado(botao, null) */
+  function prepara(b){
+    if (b.querySelector(":scope > .rot")) return;
+    var rot = document.createElement("span"); rot.className = "rot";
+    while (b.firstChild) rot.appendChild(b.firstChild);
+    var env = document.createElement("span"); env.className = "env"; env.setAttribute("aria-hidden", "true");
+    env.innerHTML = '<i class="nd-giro"></i><span></span>'; env.lastChild.textContent = b.dataset.enviando || "Enviando…";
+    var ok = document.createElement("span"); ok.className = "ok"; ok.setAttribute("aria-hidden", "true");
+    ok.innerHTML = '<svg class="nd-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" pathLength="1"/></svg><span></span>';
+    ok.lastChild.textContent = b.dataset.feito || "Salvo";
+    b.append(rot, env, ok);
+  }
+  N.estado = function(b, estado){
+    prepara(b); clearTimeout(b._ndVolta);
+    if (!estado) { delete b.dataset.estado; b.removeAttribute("aria-busy"); b.disabled = false; return; }
+    b.dataset.estado = estado;
+    if (estado === "enviando") { b.setAttribute("aria-busy", "true"); b.disabled = true; }
+    if (estado === "feito") { b.removeAttribute("aria-busy"); vibra(30); b._ndVolta = setTimeout(function(){ N.estado(b, null); }, 1800); }
+  };
+
+  /* Segurar para confirmar: <button class="nd-btn nd-segurar" data-tempo="1200">Segure para excluir</button>
+     Ao encher, dispara o evento "nd-confirma" no botão */
+  var seg = {b: null, ini: 0, raf: 0};
+  function comeca(e){
+    var b = e.target.closest && e.target.closest(".nd-segurar"); if (!b || b.disabled) return;
+    if (e.type === "keydown") { if (e.repeat || (e.key !== " " && e.key !== "Enter")) return; e.preventDefault(); }
+    if (seg.b) return;
+    if (!b.querySelector(":scope > .enche")) { var en = document.createElement("span"); en.className = "enche"; b.prepend(en); }
+    var tempo = +(b.dataset.tempo || 1200);
+    seg.b = b; seg.ini = performance.now(); b.classList.remove("volta");
+    var passo = function(t){
+      if (seg.b !== b) return;
+      var p = Math.min(1, (t - seg.ini) / tempo); b.style.setProperty("--p", p);
+      if (p >= 1) { seg.b = null; vibra(40); b.dispatchEvent(new CustomEvent("nd-confirma", {bubbles: true}));
+        setTimeout(function(){ b.classList.add("volta"); b.style.setProperty("--p", 0); }, 400); return; }
+      seg.raf = requestAnimationFrame(passo);
+    };
+    seg.raf = requestAnimationFrame(passo);
+  }
+  function para(){ if (!seg.b) return; var b = seg.b; seg.b = null; cancelAnimationFrame(seg.raf); b.classList.add("volta"); b.style.setProperty("--p", 0); }
+  document.addEventListener("pointerdown", comeca); document.addEventListener("keydown", comeca);
+  ["pointerup", "pointercancel", "keyup"].forEach(function(ev){ document.addEventListener(ev, para); });
+  document.addEventListener("pointerout", function(e){ if (seg.b && e.target.closest && e.target.closest(".nd-segurar") === seg.b && !seg.b.contains(e.relatedTarget)) para(); });
+  document.addEventListener("contextmenu", function(e){ if (e.target.closest && e.target.closest(".nd-segurar")) e.preventDefault(); });
+
+  /* Seletor com pílula que desliza: .nd-seg.desliza (a pílula é criada aqui) */
+  function pilulas(){
+    document.querySelectorAll(".nd-seg.desliza").forEach(function(g){
+      var p = g.querySelector(":scope > .pilula");
+      if (!p) { p = document.createElement("i"); p.className = "pilula"; p.setAttribute("aria-hidden", "true"); g.prepend(p); }
+      var b = g.querySelector('button[aria-pressed="true"]'); if (!b) return;
+      p.style.width = b.offsetWidth + "px"; p.style.transform = "translateX(" + b.offsetLeft + "px)";
+    });
+  }
+  N.pilulas = pilulas;
+  document.addEventListener("click", function(e){ if (e.target.closest && e.target.closest(".nd-seg.desliza")) requestAnimationFrame(pilulas); });
+  addEventListener("resize", pilulas);
+  quando(function(){ pilulas(); if (document.fonts) document.fonts.ready.then(pilulas); });
+
+  /* Números que contam: <span data-nd-conta="142.51" data-casas="2">142,51</span>
+     Sobe até o valor quando aparece na tela. Nadiana.contar(el, novoValor) conta do valor atual até o novo */
+  N.contar = function(el, alvo){
+    var c = +(el.dataset.casas || 0), de = el._ndValor || 0;
+    if (alvo == null) alvo = +el.dataset.ndConta; else { el.dataset.ndConta = alvo; }
+    el._ndValor = alvo;
+    if (calmo()) { el.textContent = N.num(alvo, c); return; }
+    var t0 = performance.now(), dur = 1000;
+    var passo = function(t){ var p = Math.min(1, (t - t0) / dur), k = 1 - Math.pow(1 - p, 3);
+      el.textContent = N.num(de + (alvo - de) * k, c); if (p < 1) requestAnimationFrame(passo); };
+    requestAnimationFrame(passo);
+  };
+  /* Confirmação com visto desenhado: Nadiana.feito(el) toca de novo; também toca quando aparece na tela */
+  function tocaFeito(el){ if (calmo()) return; el.classList.remove("toca"); void el.getBoundingClientRect(); el.classList.add("toca"); }
+  N.feito = function(el){ tocaFeito(el); vibra(30); };
+  quando(function(){
+    if (!("IntersectionObserver" in window)) return;
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){
+      if (!e.isIntersecting) return; io.unobserve(e.target);
+      if (e.target.matches("[data-nd-conta]")) N.contar(e.target); else tocaFeito(e.target);
+    }); }, {threshold: .5});
+    document.querySelectorAll("[data-nd-conta], .nd-feito").forEach(function(x){ io.observe(x); });
+    document.querySelectorAll(".nd-estado").forEach(prepara);
+  });
+
   window.Nadiana = N;
 })();

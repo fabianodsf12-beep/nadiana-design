@@ -125,6 +125,27 @@ Use sempre a variável, nunca o código da cor solto no CSS.
 | `.nd-net` (`.ocupado`, `.erro`) | Indicador de conexão. |
 | `.nd-rodape` | Rodapé com a origem dos dados. |
 
+## Movimento
+
+Movimento serve para confirmar que o app recebeu o toque, e não para enfeitar. Quem pede menos movimento no aparelho vê tudo parado (já vem em `componentes.css` e `nadiana.js`).
+
+| Classe ou atributo | O que faz | Onde usar |
+| --- | --- | --- |
+| `.nd-onda` | Uma onda sai do ponto tocado. | Todos os botões e itens tocáveis. |
+| `.seta`, `.gira`, `.desce` (no `svg` do ícone) | O ícone avança, gira ou desce ao passar o mouse ou focar. | Botões com ícone: seta para avançar, + para criar, seta de baixar. |
+| `.nd-estado` | O botão mostra "Enviando…" e depois "Salvo", com o visto desenhado. Fica bloqueado enquanto envia, o que evita lançar em dobro. Textos em `data-enviando` e `data-feito`. | Todo botão que salva na planilha. |
+| `.nd-segurar` | Enche enquanto o dedo fica apertado (1,2 s, ou `data-tempo`). Soltar antes cancela. Ao encher, dispara o evento `nd-confirma`. | Excluir lançamento e outras ações que não se desfazem; substitui a janela "Tem certeza?". Ofereça "Desfazer" no aviso. |
+| `.nd-seg.desliza` | A pílula do seletor escorrega até a opção escolhida. | Seletores de 2 a 4 opções. |
+| `data-nd-conta="12702"` (`data-casas` para decimais) | O número sobe até o valor quando aparece na tela. Escreva o valor final no HTML: sem script, ele já aparece certo. | Números em destaque (`Numero`). |
+| `.nd-feito` | Visto desenhado com título e apoio. | Depois de salvar algo importante, como a execução de uma OS. |
+| `.nd-net.vivo` | O ponto pulsa enquanto os dados estão em dia; com `.ocupado` ou `.erro`, para. | Indicador de conexão no cabeçalho. |
+
+Funções em `nadiana.js`:
+- `Nadiana.estado(botao, "enviando")`, depois `Nadiana.estado(botao, "feito")` (volta sozinho em 1,8 s) ou `Nadiana.estado(botao, null)` se der erro.
+- `Nadiana.contar(el, novoValor)`: conta do valor atual até o novo, para números que se atualizam.
+- `Nadiana.feito(el)`: toca o visto de novo e vibra de leve no Android.
+- Botão com `.nd-estado`: o conteúdo é reorganizado por `nadiana.js`; para mudar o texto depois, mude o `.rot` de dentro dele.
+
 `nadiana.js` também traz `Nadiana.trocarTema()`, `Nadiana.num(1234.5, 2)` ("1.234,50"), `Nadiana.reais(7113.32)` ("R$ 7.113,32") e `Nadiana.data("2026-10-12")` ("12/10/2026").
 
 ## Ícones
