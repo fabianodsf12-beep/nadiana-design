@@ -254,7 +254,8 @@ a.nd-lista-item:hover,.nd-lista > a:hover{background:var(--panel2);margin-inline
 .nd-estado .env,.nd-estado .ok{opacity:0;transform:translateY(8px)}
 .nd-estado[data-estado="enviando"] .rot,.nd-estado[data-estado="feito"] .rot{opacity:0;transform:translateY(-8px)}
 .nd-estado[data-estado="enviando"] .env,.nd-estado[data-estado="feito"] .ok{opacity:1;transform:none}
-.nd-estado[data-estado="enviando"],.nd-estado[data-estado="enviando"]:disabled{cursor:progress;opacity:1}
+.nd-estado[data-estado],.nd-estado[data-estado]:disabled{opacity:1}
+.nd-estado[data-estado="enviando"]{cursor:progress}
 .nd-estado .ok path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 420ms var(--curva) 120ms}
 .nd-estado[data-estado="feito"] .ok path{stroke-dashoffset:0}
 .nd-giro{width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:nd-gira 700ms linear infinite;flex-shrink:0}
