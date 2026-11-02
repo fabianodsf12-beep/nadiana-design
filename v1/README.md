@@ -73,7 +73,9 @@ Use sempre a variável, nunca o código da cor solto no CSS.
 - **Ação.** Botão principal e item ativo em `brand` com texto `brand-ink`. Destaque suave (chips, item ativo da navegação) em `brand-soft`.
 - **Situação.** Aviso: `warn` sobre `warn-bg`. Erro ou atraso: `bad` sobre `bad-bg`. Concluído: `ok`. Toda situação leva uma palavra ou ícone, nunca só a cor.
 - **Calendário de aplicações.** `s-programada`, `s-prox7`, `s-janela`, `s-atrasada`, `s-adiantada`, `s-none`, sempre com legenda visível.
-- **Gráficos.** `graf-1` (verde da marca), `graf-2` (azul), `graf-3` (magenta), `graf-4` (violeta), sempre nessa ordem; `graf-outros` (cinza) para "Outros" e para o convencional. Testadas para daltonismo e contraste nos dois temas.
+- **Gráficos.** `graf-1` (verde da marca), `graf-2` (azul), `graf-3` (magenta), `graf-4` (violeta), `graf-5` (oliva), `graf-6` (ciano), `graf-7` (mostarda) e `graf-8` (rosa), sempre nessa ordem; `graf-outros` (cinza) para "Outros" e para o convencional. Testadas para daltonismo e contraste nos dois temas, sem laranja (reservado para planta daninha) e sem vermelho (erro e atraso).
+- **Tons do verde e do petróleo.** `verde-50` a `verde-900` e `petroleo-50` a `petroleo-900`: o mesmo tom da marca, do mais claro ao mais escuro. `verde-400`, `verde-500` e `verde-600` são `nadiana-verde-claro`, `nadiana-verde` e `nadiana-verde-escuro`; `petroleo-900` é `nadiana-petroleo`. Fundos suaves nos tons 50 a 100, bordas no 200, texto do 600 para cima sobre fundo claro; sobre fundo petróleo, texto claro em `petroleo-200`. O uso de cada tom está na nota dele.
+- **Cores de apoio.** `apoio-terra`, `apoio-palha`, `apoio-ceu`, `apoio-sol` e `apoio-agua`, cada uma com um tom `-claro` para fundo. Servem para capas, apresentações, relatórios e ilustrações, ao lado dos verdes. Não use para situação (atraso, aviso, concluído) nem como série de gráfico. `apoio-sol` é claro demais para texto: só fundo, faixa e ilustração, com `ink` por cima. `apoio-agua` combina com chuva e irrigação.
 - Texto branco sobre `nadiana-verde` só a partir de 24px (19px em negrito). Botão verde usa `brand` ou `nadiana-verde-escuro`.
 - Aplicativos têm tema claro e escuro; relatórios em PDF só o claro.
 
@@ -156,7 +158,7 @@ Funções em `nadiana.js`:
 
 ## Gráficos (`graficos.js`)
 
-- Até 4 séries por gráfico, sempre de `graf-1` a `graf-4`; o resto vai em "Outros" (`graf-outros`). Uma série muda de cor só se o significado mudar, nunca por posição.
+- Até 8 séries por gráfico, sempre de `graf-1` a `graf-8`; o resto vai em "Outros" (`graf-outros`). Em gráfico de pontos e mapa, onde qualquer série encosta em qualquer outra, até 3. Uma série muda de cor só se o significado mudar, nunca por posição.
 - Série única não leva legenda: o título do cartão diz o que é, e o valor vai na ponta da barra.
 - Barras finas (até 24px) com ponta arredondada; linhas de 2px; grade discreta; um eixo só (nunca dois eixos Y).
 - Números no padrão brasileiro e eixos curtos ("1,5 mil"). Ao trocar de tema, as cores se ajustam sozinhas (`NadianaGraficos.registrar(grafico)`).

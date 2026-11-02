@@ -3,10 +3,11 @@
    <script src="https://fabianodsf12-beep.github.io/nadiana-design/v1/graficos.js"></script>
 
    NadianaGraficos.aplicar();                       // uma vez, antes de criar os gráficos
-   const cor = NadianaGraficos.cores();             // {graf1..graf4, outros, ...} do tema atual
+   const cor = NadianaGraficos.cores();             // {graf1..graf8, outros, ...} do tema atual
    new Chart(el, NadianaGraficos.barras({...}));    // ou .linhas({...})
 
-   Regras: até 4 séries (graf-1 a graf-4, sempre nessa ordem); o resto vai em "Outros".
+   Regras: até 8 séries (graf-1 a graf-8, sempre nessa ordem); o resto vai em "Outros".
+   Em gráfico de pontos e mapa, onde qualquer série encosta em qualquer outra, até 3 séries.
    Série única não precisa de legenda: o título do cartão diz o que é. */
 (function(){
   function v(n){ return getComputedStyle(document.documentElement).getPropertyValue("--" + n).trim(); }
@@ -21,10 +22,10 @@
 
   var G = {
     cores: function(){
-      return { graf1: v("graf-1"), graf2: v("graf-2"), graf3: v("graf-3"), graf4: v("graf-4"), outros: v("graf-outros"),
+      return { graf1: v("graf-1"), graf2: v("graf-2"), graf3: v("graf-3"), graf4: v("graf-4"), graf5: v("graf-5"), graf6: v("graf-6"), graf7: v("graf-7"), graf8: v("graf-8"), outros: v("graf-outros"),
         ink: v("ink"), muted: v("muted"), line: v("line"), line2: v("line2"), panel: v("panel") };
     },
-    serie: function(i){ return ["graf-1","graf-2","graf-3","graf-4"][i] ? v(["graf-1","graf-2","graf-3","graf-4"][i]) : v("graf-outros"); },
+    serie: function(i){ return i >= 0 && i < 8 ? v("graf-" + (i + 1)) : v("graf-outros"); },
     fmt: fmt, curto: curto,
 
     aplicar: function(){

@@ -11,7 +11,7 @@ Antes de criar ou mudar qualquer tela, relatório, PDF ou apresentação, leia a
 - Cores, espaços e cantos só por variável de `tokens.css` (`var(--brand)`, `var(--space-4)`). Não invente cor nova; se faltar uma, proponha antes de usar.
 - Use os componentes `nd-` antes de criar estilo próprio. Página nova começa do `v1/modelo.html` da base.
 - Cabeçalho claro com o logo (`.nd-topo`); o verde fica para ações. Navegação com `.nd-app` + `.nd-nav`.
-- Ícones só do conjunto Lucide de `icones.js`; gráficos com `graficos.js` (até 4 séries, `graf-1` a `graf-4`, um eixo só); PDF com `pdf.js`.
+- Ícones só do conjunto Lucide de `icones.js`; gráficos com `graficos.js` (até 8 séries, `graf-1` a `graf-8`, um eixo só); PDF com `pdf.js`.
 - Fontes: Barlow (texto) e Barlow Condensed (títulos e números).
 - Tema claro e escuro nos aplicativos; PDF só claro.
 - Textos em português do Brasil, curtos, com os termos do campo; números no padrão brasileiro com unidade ("142,51 ha", "R$ 7.113,32", "12/10/2026"). Sem emojis.

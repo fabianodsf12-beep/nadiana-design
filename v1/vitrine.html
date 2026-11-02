@@ -88,8 +88,11 @@ main{display:flex;flex-direction:column;gap:calc(var(--space-6) * 1.5);padding-b
         <h3 class="sub">Marca</h3><div class="cores" data-grupo="nadiana-verde nadiana-verde-escuro nadiana-verde-claro nadiana-petroleo nadiana-preto"></div>
         <h3 class="sub">Interface</h3><div class="cores" data-grupo="bg panel panel2 ink muted line line2 brand brand-ink brand-soft ok focus warn warn-bg bad bad-bg"></div>
         <h3 class="sub">Status do calendário</h3><div class="cores" data-grupo="s-programada s-prox7 s-janela s-atrasada s-adiantada s-none"></div>
-        <h3 class="sub">Gráficos (novo)</h3><div class="cores" data-grupo="graf-1 graf-2 graf-3 graf-4 graf-outros"></div>
-        <h3 class="sub">Sombras (novo)</h3>
+        <h3 class="sub">Tons do verde</h3><div class="cores" data-grupo="verde-50 verde-100 verde-200 verde-300 verde-400 verde-500 verde-600 verde-700 verde-800 verde-900"></div>
+        <h3 class="sub">Tons do petróleo</h3><div class="cores" data-grupo="petroleo-50 petroleo-100 petroleo-200 petroleo-300 petroleo-400 petroleo-500 petroleo-600 petroleo-700 petroleo-800 petroleo-900"></div>
+        <h3 class="sub">Cores de apoio</h3><p class="nota">Para capas, apresentações, relatórios e ilustrações. Não use para situação nem para série de gráfico. O sol é só fundo e ilustração.</p><div class="cores" data-grupo="apoio-terra apoio-terra-claro apoio-palha apoio-palha-claro apoio-ceu apoio-ceu-claro apoio-sol apoio-sol-claro apoio-agua apoio-agua-claro"></div>
+        <h3 class="sub">Gráficos</h3><div class="cores" data-grupo="graf-1 graf-2 graf-3 graf-4 graf-5 graf-6 graf-7 graf-8 graf-outros"></div>
+        <h3 class="sub">Sombras</h3>
         <div class="sombras">
           <div style="box-shadow:var(--sombra-1)"><b>sombra-1</b><br><span class="nd-muted">Cartões e cabeçalho</span></div>
           <div style="box-shadow:var(--sombra-2)"><b>sombra-2</b><br><span class="nd-muted">Ao passar o mouse, menus</span></div>
@@ -274,10 +277,11 @@ main{display:flex;flex-direction:column;gap:calc(var(--space-6) * 1.5);padding-b
       <!-- GRÁFICOS -->
       <section class="nd-secao" id="graficos">
         <h2>Gráficos</h2>
-        <p class="nota">Até 4 séries, sempre na ordem graf-1 a graf-4; o resto vai em “Outros”. Série única não leva legenda: o título diz o que é.</p>
+        <p class="nota">Até 8 séries, sempre na ordem graf-1 a graf-8; o resto vai em “Outros”. Em gráfico de pontos e mapa, até 3. Série única não leva legenda: o título diz o que é.</p>
         <div class="duas">
           <div class="nd-cartao"><div class="cab"><h2>Consumo por produto</h2><span class="nd-legenda nd-muted">litros · safra 26/27</span></div><div class="nd-grafico" style="height:230px"><canvas id="g-produtos" aria-label="Consumo por produto em litros" role="img"></canvas></div></div>
           <div class="nd-cartao"><div class="cab"><h2>Área aplicada por semana</h2><span class="nd-legenda nd-muted">ha</span></div><div class="nd-grafico"><canvas id="g-semanas" aria-label="Área aplicada por semana e pulverizador" role="img"></canvas></div></div>
+          <div class="nd-cartao"><div class="cab"><h2>Área por operação</h2><span class="nd-legenda nd-muted">ha por semana · 6 séries</span></div><div class="nd-grafico"><canvas id="g-operacoes" aria-label="Área aplicada por operação e semana" role="img"></canvas></div></div>
           <div class="nd-cartao"><div class="cab"><h2>Calda por talhão</h2><span class="nd-legenda nd-muted">L · convencional × WEED-IT</span></div><div class="nd-grafico"><canvas id="g-weedit" aria-label="Calda convencional e localizada por talhão" role="img"></canvas></div></div>
         </div>
       </section>
@@ -361,6 +365,14 @@ NadianaGraficos.registrar(new Chart(document.getElementById("g-semanas"), Nadian
     {nome: "Pulverizador 1", dados: [182, 240, 211, 265, 248]},
     {nome: "Pulverizador 2", dados: [120, 166, 198, 174, 205]},
     {nome: "Pulverizador 3", dados: [64, 92, 81, 130, 118]}
+  ]
+})));
+NadianaGraficos.registrar(new Chart(document.getElementById("g-operacoes"), NadianaGraficos.barras({
+  unidade: "ha", rotulos: ["06/10", "13/10", "20/10", "27/10"],
+  series: [
+    {nome: "Dessecação", dados: [120, 40, 0, 0]}, {nome: "Herbicida pós", dados: [30, 110, 60, 10]},
+    {nome: "Fungicida 1ª", dados: [0, 50, 120, 70]}, {nome: "Inseticida 1ª", dados: [0, 20, 80, 110]},
+    {nome: "Fungicida 2ª", dados: [0, 0, 20, 90]}, {nome: "Adubo foliar", dados: [10, 30, 40, 50]}
   ]
 })));
 NadianaGraficos.registrar(new Chart(document.getElementById("g-weedit"), NadianaGraficos.barras({
