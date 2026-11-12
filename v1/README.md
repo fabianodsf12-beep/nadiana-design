@@ -126,6 +126,11 @@ Use sempre a variável, nunca o código da cor solto no CSS.
 | `.nd-grafico`, `.nd-legenda-graf` | Área do gráfico e legenda própria. |
 | `.nd-net` (`.ocupado`, `.erro`) | Indicador de conexão. |
 | `.nd-rodape` | Rodapé com a origem dos dados. |
+| `.nd-menu-ancora`, `.nd-menu` (`.esquerda`, `.acima`) | Menu de ações que nasce do botão. O botão leva `data-nd-menu="id"`; fecha ao escolher, ao tocar fora, com Esc. |
+| `.nd-selo` (`.erro`) | Selo de contagem sobre um ícone (navegação, sino). Some com `hidden` quando zera. |
+| `.nd-carrega` (`.esqueleto` + `.conteudo`) | Esqueleto e conteúdo no mesmo lugar; `Nadiana.pronto(el)` troca um pelo outro. |
+| `.nd-etapas` | Barra com as etapas do carregamento, criada por `Nadiana.etapas()`. |
+| `.nd-abertura` | Tela de abertura com o símbolo, criada por `Nadiana.abertura()`. |
 
 ## Movimento
 
@@ -141,6 +146,28 @@ Movimento serve para confirmar que o app recebeu o toque, e não para enfeitar. 
 | `data-nd-conta="12702"` (`data-casas` para decimais) | O número sobe até o valor quando aparece na tela. Escreva o valor final no HTML: sem script, ele já aparece certo. | Números em destaque (`Numero`). |
 | `.nd-feito` | Visto desenhado com título e apoio. | Depois de salvar algo importante, como a execução de uma OS. |
 | `.nd-net.vivo` | O ponto pulsa enquanto os dados estão em dia; com `.ocupado` ou `.erro`, para. | Indicador de conexão no cabeçalho. |
+| `a.nd-cartao`, `button.nd-cartao`, linhas da `.nd-lista` (ou `.nd-afunda` em qualquer outro) | Afunda um pouco no toque e volta com mola. Automático. | Cartões e linhas que abrem algo. |
+| `.nd-menu` | Cresce a partir do botão tocado e encolhe de volta para ele. | Ações de uma OS, de um experimento, de uma linha. |
+| `Nadiana.rolar(el, 4)` | O número novo entra rolando: de baixo quando sobe, de cima quando desce. Num `.nd-selo`, ele dá um pulinho. | Contadores: pendentes, atrasadas, lembretes. |
+| `.nd-nav.desliza` | O fundo verde corre até o item ativo e o ícone dá um pulinho; segue o `aria-current="page"` sozinho. | Navegação de todos os apps. |
+
+### Troca de tela
+
+Na troca de tela, o cabeçalho (`.nd-topo`) e a navegação (`.nd-nav`) ficam parados e só o conteúdo muda. Use `Nadiana.trocar` sempre que o app esconder uma tela e mostrar outra:
+
+- `Nadiana.trocar(telaAtual, telaNova, {modo})`: esconde uma e mostra a outra com `hidden`.
+- `Nadiana.trocar(function(){ mostrar("resultados"); }, {modo})`: quando o app já tem a própria função de troca.
+- Modos: `"suave"` (padrão) nas abas da navegação; `"frente"` ao abrir uma tela de dentro (a nova entra pela direita); `"volta"` no Voltar; `"cresce"` quando um cartão vira a tela de detalhe (`{modo: "cresce", cartao: el}`) e `"encolhe"` na volta (`{modo: "encolhe", cartao: el}`).
+- Entre páginas (do Início para o Painel ou Lançamentos), a troca suave acontece sozinha: basta as duas páginas carregarem `componentes.css`.
+- Usa as View Transitions do navegador (Chrome do Android e Safari do iPhone atualizados). Onde não há, a tela nova só aparece subindo de leve. Só um `.nd-topo` e uma `.nd-nav` visíveis por página.
+
+### Carregamento
+
+Escolha pelo tempo de espera: até 1 s, nada aparece; de 1 a 3 s, esqueleto (`.nd-carrega`) ou o `.nd-net.ocupado`; acima de 3 s, a barra com etapas. A abertura com o símbolo é só para a primeira carga do app.
+
+- `.nd-carrega` com `.esqueleto` e `.conteudo` dentro: `Nadiana.pronto(el)` mostra o conteúdo no lugar do esqueleto, sem a tela pular; `Nadiana.pronto(el, false)` volta.
+- `var c = Nadiana.etapas(el, ["Conectando à planilha", "Lendo os talhões", "Calculando áreas e datas"], {titulo: "Buscando a planilha"})`: barra, porcentagem e a lista com a etapa da vez. `c.etapa(1)` passa para a próxima, `c.progresso(0.6)` manda a barra quando o app sabe a porcentagem, `c.fim()` completa. Passando de 4 s (`{demora}`), aparece o aviso "Está demorando mais que o normal".
+- `Nadiana.abertura("Abrindo o Painel")` cobre a tela com o símbolo e um anel girando (só aparece se demorar mais de 400 ms); `Nadiana.abertura.frase("Buscando a planilha")` troca a frase; `Nadiana.abertura.fim()` some com ela.
 
 Funções em `nadiana.js`:
 - `Nadiana.estado(botao, "enviando")`, depois `Nadiana.estado(botao, "feito")` (volta sozinho em 1,8 s) ou `Nadiana.estado(botao, null)` se der erro.

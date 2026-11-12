@@ -2,6 +2,8 @@
    <script src="https://fabianodsf12-beep.github.io/nadiana-design/v1/nadiana.js" defer></script> */
 (function(){
   var N = {};
+  /* Endereço da base (para achar o símbolo usado na abertura) */
+  var BASE = ((document.currentScript && document.currentScript.src) || "").replace(/[^\/]*$/, "");
 
   /* Aviso rápido: Nadiana.aviso("Execução registrada", {icone:"circle-check", acao:"Desfazer", aoAgir:fn}) */
   N.aviso = function(texto, op){
@@ -179,6 +181,195 @@
     document.querySelectorAll("[data-nd-conta], .nd-feito").forEach(function(x){ io.observe(x); });
     document.querySelectorAll(".nd-estado").forEach(prepara);
   });
+
+  /* ---------- Toque e troca de tela ---------- */
+
+  /* Menu que nasce do botão: <button data-nd-menu="m1" aria-haspopup="menu" aria-expanded="false">, <div class="nd-menu" id="m1" role="menu">.
+     Abre e fecha no botão; fecha ao escolher, ao tocar fora, com Esc e com Tab; setas sobem e descem */
+  function botaoDoMenu(m){ return m.id ? document.querySelector('[data-nd-menu="' + m.id + '"]') : null; }
+  function itensDoMenu(m){ return Array.prototype.slice.call(m.querySelectorAll(":scope > button:not([disabled]), :scope > a")); }
+  function fechaMenu(m, focar){
+    if (!m.classList.contains("aberto")) return; m.classList.remove("aberto");
+    var b = botaoDoMenu(m); if (b) { b.setAttribute("aria-expanded", "false"); if (focar) b.focus(); }
+  }
+  N.menu = function(m, abrir){
+    if (typeof m === "string") m = document.getElementById(m); if (!m) return;
+    if (abrir == null) abrir = !m.classList.contains("aberto");
+    document.querySelectorAll(".nd-menu.aberto").forEach(function(x){ if (x !== m) fechaMenu(x); });
+    if (!abrir) { fechaMenu(m); return; }
+    m.classList.add("aberto"); var b = botaoDoMenu(m); if (b) b.setAttribute("aria-expanded", "true");
+    var it = itensDoMenu(m); if (it[0]) it[0].focus({preventScroll: true});
+  };
+  document.addEventListener("click", function(e){
+    var b = e.target.closest && e.target.closest("[data-nd-menu]");
+    if (b) { e.preventDefault(); N.menu(b.getAttribute("data-nd-menu")); return; }
+    var item = e.target.closest && e.target.closest(".nd-menu > button, .nd-menu > a");
+    document.querySelectorAll(".nd-menu.aberto").forEach(function(m){
+      if (item && m.contains(item)) fechaMenu(m, true); else if (!m.contains(e.target)) fechaMenu(m);
+    });
+  });
+  document.addEventListener("keydown", function(e){
+    var m = document.querySelector(".nd-menu.aberto"); if (!m) return;
+    if (e.key === "Escape") { e.preventDefault(); fechaMenu(m, true); return; }
+    if (e.key === "Tab") { fechaMenu(m); return; }
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault(); var it = itensDoMenu(m), i = it.indexOf(document.activeElement);
+      i = e.key === "ArrowDown" ? (i + 1) % it.length : (i <= 0 ? it.length - 1 : i - 1); if (it[i]) it[i].focus();
+    }
+  });
+
+  /* Número que rola: Nadiana.rolar(el, 4). Num .nd-selo, troca o número, dá um pulinho e some quando zera */
+  var lerNum = function(t){ var v = parseFloat(String(t).replace(/\./g, "").replace(",", ".")); return isNaN(v) ? 0 : v; };
+  N.rolar = function(el, novo){
+    var txt = typeof novo === "number" ? N.num(novo, Math.round(novo) === novo ? 0 : 2) : String(novo);
+    var atual = el._ndRola != null ? el._ndRola : lerNum(el.textContent), v = lerNum(novo);
+    el._ndRola = v;
+    if (el.classList.contains("nd-selo")) {
+      el.textContent = txt; el.hidden = !v;
+      if (!calmo() && v) { el.classList.remove("pinga"); void el.offsetWidth; el.classList.add("pinga"); }
+      return;
+    }
+    el.classList.add("nd-rola");
+    if (calmo() || v === atual) { el.innerHTML = ""; var s0 = document.createElement("span"); s0.textContent = txt; el.appendChild(s0); return; }
+    el.classList.toggle("desce", v < atual);
+    var velho = el.lastElementChild;
+    if (!velho || velho.tagName !== "SPAN") { velho = document.createElement("span"); velho.textContent = el.textContent; el.textContent = ""; el.appendChild(velho); }
+    Array.prototype.slice.call(el.children).forEach(function(x){ if (x !== velho) x.remove(); });
+    velho.className = "sai";
+    var n = document.createElement("span"); n.className = "entra"; n.textContent = txt; el.appendChild(n);
+    setTimeout(function(){ velho.remove(); n.className = ""; }, 320);
+  };
+
+  /* Troca de tela: Nadiana.trocar(telaAtual, telaNova, {modo}) troca o hidden das duas;
+     ou Nadiana.trocar(function(){ …a troca do app… }, {modo, para}).
+     modo: "suave" (abas, padrão), "frente" (abrir), "volta" (voltar),
+     "cresce" (cartão vira a tela nova: {cartao}) e "encolhe" (a tela volta para o cartão: {cartao}).
+     Usa as View Transitions do navegador; sem elas, a tela nova só aparece subindo de leve */
+  N.trocar = function(a, b, op){
+    var muda, de, para;
+    if (typeof a === "function") { muda = a; op = b || {}; de = op.de || null; para = op.para || null; }
+    else { op = op || {}; de = a; para = b; muda = function(){ if (de) de.hidden = true; if (para) para.hidden = false; }; }
+    var modo = op.modo || "suave", c = op.cartao || null;
+    var antes = modo === "cresce" ? c : modo === "encolhe" ? de : null;
+    var depois = modo === "cresce" ? para : modo === "encolhe" ? c : null;
+    if (calmo() || !document.startViewTransition) {
+      muda();
+      var alvo = depois || para;
+      if (alvo && !calmo()) {
+        alvo.classList.remove("nd-aparece", "frente", "volta"); void alvo.offsetWidth;
+        alvo.classList.add("nd-aparece"); if (modo === "frente" || modo === "volta") alvo.classList.add(modo);
+        alvo.addEventListener("animationend", function fim(){ alvo.classList.remove("nd-aparece", "frente", "volta"); alvo.removeEventListener("animationend", fim); });
+      }
+      return Promise.resolve();
+    }
+    var html = document.documentElement;
+    html.dataset.ndTroca = modo === "encolhe" ? "cresce" : modo;
+    if (antes) antes.style.viewTransitionName = "nd-cresce";
+    var vt = document.startViewTransition(function(){
+      muda(); if (antes) antes.style.viewTransitionName = ""; if (depois) depois.style.viewTransitionName = "nd-cresce";
+    });
+    html._ndVt = vt;
+    return vt.finished.catch(function(){}).then(function(){
+      if (depois) depois.style.viewTransitionName = ""; if (antes) antes.style.viewTransitionName = "";
+      if (html._ndVt === vt) delete html.dataset.ndTroca;
+    });
+  };
+
+  /* Marcador da navegação que desliza: .nd-nav.desliza (o marcador é criado aqui).
+     Segue o item com aria-current="page" (ou aria-selected="true"), quando a página troca o item ou o tamanho muda */
+  var obsNavTam = window.ResizeObserver ? new ResizeObserver(function(){ requestAnimationFrame(marcaNav); }) : null;
+  var obsNav = new MutationObserver(function(){ marcaNav(); });
+  function marcaNav(){
+    document.querySelectorAll(".nd-nav.desliza").forEach(function(n){
+      var m = n.querySelector(":scope > .nd-nav-marca");
+      if (!m) { m = document.createElement("i"); m.className = "nd-nav-marca parado"; m.setAttribute("aria-hidden", "true"); n.prepend(m); }
+      if (!n._ndObs) { n._ndObs = 1; if (obsNavTam) obsNavTam.observe(n); obsNav.observe(n, {attributes: true, subtree: true, attributeFilter: ["aria-current", "aria-selected"]}); }
+      var at = n.querySelector(':scope > [aria-current="page"], :scope > [aria-selected="true"]');
+      if (!at || !at.offsetWidth) { m.style.opacity = "0"; return; }
+      m.style.opacity = "";
+      var largo = matchMedia("(min-width:900px)").matches, alvo = largo ? at : (at.querySelector(".nd-ic") || at);
+      var nr = n.getBoundingClientRect(), r = alvo.getBoundingClientRect();
+      var x = r.left - nr.left - n.clientLeft + n.scrollLeft, y = r.top - nr.top - n.clientTop + n.scrollTop;
+      var w = r.width + "px", h = r.height + "px", t = "translate(" + x + "px," + y + "px)";
+      if (m.style.width !== w) m.style.width = w; if (m.style.height !== h) m.style.height = h; if (m.style.transform !== t) m.style.transform = t;
+      if (m.classList.contains("parado")) requestAnimationFrame(function(){ requestAnimationFrame(function(){ m.classList.remove("parado"); }); });
+      if (n._ndAtual && n._ndAtual !== at && !calmo()) {
+        var ic = at.querySelector(".nd-ic"); if (ic) { ic.classList.remove("pula"); void ic.getBoundingClientRect(); ic.classList.add("pula"); }
+      }
+      n._ndAtual = at;
+    });
+  }
+  N.marcaNav = marcaNav;
+  addEventListener("resize", marcaNav);
+  quando(function(){ marcaNav(); if (document.fonts) document.fonts.ready.then(marcaNav); });
+
+  /* ---------- Carregamento ---------- */
+
+  /* Esqueleto que vira conteúdo: Nadiana.pronto(el) mostra o .conteudo; Nadiana.pronto(el, false) volta ao .esqueleto */
+  N.pronto = function(el, sim){
+    if (sim === false) { el.removeAttribute("data-pronto"); el.setAttribute("aria-busy", "true"); }
+    else { el.setAttribute("data-pronto", ""); el.removeAttribute("aria-busy"); }
+  };
+
+  /* Abertura com o símbolo: Nadiana.abertura("Abrindo o Painel") cobre a tela (só aparece se demorar mais de 400 ms, ou {atraso});
+     Nadiana.abertura.frase("Buscando a planilha") troca a frase; Nadiana.abertura.fim() some com ela */
+  N.abertura = function(texto, op){
+    op = op || {};
+    var a = document.querySelector(".nd-abertura");
+    if (!a) {
+      a = document.createElement("div"); a.className = "nd-abertura"; a.setAttribute("role", "status"); a.setAttribute("aria-live", "polite");
+      a.innerHTML = '<div class="roda"><svg viewBox="0 0 112 112" aria-hidden="true"><circle class="fundo" cx="56" cy="56" r="50"/><circle class="arco" cx="56" cy="56" r="50"/></svg><img alt="Nadiana"></div><p></p>';
+      a.querySelector("img").src = op.simbolo || BASE + "logos/nadiana-simbolo.svg";
+      a.hidden = true; document.body.appendChild(a);
+    }
+    a.classList.remove("sai"); clearTimeout(a._ndSai);
+    a.querySelector("p").textContent = texto || "Carregando";
+    clearTimeout(a._ndAtraso);
+    var atraso = op.atraso == null ? 400 : op.atraso;
+    if (atraso && a.hidden) a._ndAtraso = setTimeout(function(){ a.hidden = false; }, atraso); else a.hidden = false;
+    return a;
+  };
+  N.abertura.frase = function(t){ var a = document.querySelector(".nd-abertura"); if (a) a.querySelector("p").textContent = t; };
+  N.abertura.fim = function(){
+    var a = document.querySelector(".nd-abertura"); if (!a) return;
+    clearTimeout(a._ndAtraso);
+    if (a.hidden || calmo()) { a.remove(); return; }
+    a.classList.add("sai"); a._ndSai = setTimeout(function(){ a.remove(); }, 340);
+  };
+
+  /* Barra com etapas: var c = Nadiana.etapas(el, ["Conectando à planilha", "Lendo os talhões"], {titulo, demora, textoDemora});
+     c.etapa(1) passa para a etapa 2; c.progresso(0.6) manda a barra quando o app sabe a porcentagem; c.fim() completa.
+     Se passar do tempo de demora (4 s), aparece o aviso de demora */
+  N.etapas = function(el, lista, op){
+    op = op || {};
+    var titulo = op.titulo || "Carregando";
+    el.classList.add("nd-etapas"); el.setAttribute("aria-busy", "true");
+    el.innerHTML = '<div class="topo"><span></span><b>0%</b></div><div class="nd-barra" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i style="--v:0%"></i></div><ol></ol>' +
+      '<div class="nd-msg aviso" hidden><svg class="nd-ic" aria-hidden="true"><use href="#i-clock"/></svg><span></span></div>';
+    el.querySelector(".topo span").textContent = titulo;
+    var barra = el.querySelector(".nd-barra"), pct = el.querySelector(".topo b"), ol = el.querySelector("ol"), msg = el.querySelector(".nd-msg");
+    barra.setAttribute("aria-label", titulo);
+    msg.querySelector("span").textContent = op.textoDemora || "Está demorando mais que o normal. A planilha pode estar lenta.";
+    var lis = (lista || []).map(function(t){ var li = document.createElement("li"); li.innerHTML = "<i></i><span></span>"; li.lastChild.textContent = t; ol.appendChild(li); return li; });
+    var atual = 0, prog = 0, auto = true, n = Math.max(1, lis.length);
+    function poe(p){ prog = Math.max(prog, Math.min(1, p)); var v = Math.round(prog * 100);
+      barra.firstChild.style.setProperty("--v", v + "%"); barra.setAttribute("aria-valuenow", v); pct.textContent = v + "%"; }
+    function etapa(i){
+      atual = i;
+      lis.forEach(function(li, j){ var c = j < i ? "feita" : j === i ? "agora" : "";
+        if (li.className !== c) { li.className = c; li.firstChild.innerHTML = c === "feita" ? '<svg class="nd-ic" aria-hidden="true"><use href="#i-circle-check"/></svg>' : ""; } });
+      if (auto) poe(i / n);
+    }
+    /* entre uma etapa e outra a barra anda devagar, sem passar da etapa em curso */
+    var anda = setInterval(function(){ if (!auto) return; var alvo = (atual + .85) / n; if (prog < alvo) poe(prog + (alvo - prog) * .08); }, 200);
+    var demora = setTimeout(function(){ msg.hidden = false; }, op.demora || 4000);
+    etapa(0);
+    return {
+      etapa: etapa,
+      progresso: function(p){ auto = false; poe(p); },
+      fim: function(){ clearInterval(anda); clearTimeout(demora); etapa(lis.length); poe(1); msg.hidden = true; el.removeAttribute("aria-busy"); }
+    };
+  };
 
   window.Nadiana = N;
 })();

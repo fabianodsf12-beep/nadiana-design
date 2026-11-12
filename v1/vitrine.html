@@ -43,7 +43,7 @@ main{display:flex;flex-direction:column;gap:calc(var(--space-6) * 1.5);padding-b
 </head>
 <body>
 <div class="nd-app">
-  <nav class="nd-nav" aria-label="Seções da vitrine">
+  <nav class="nd-nav desliza" aria-label="Seções da vitrine">
     <div class="marca"><span class="nd-logo"><img src="logos/nadiana-logo-vertical.svg" alt="Nadiana Agronegócios"></span></div>
     <a href="#marca" aria-current="page"><svg class="nd-ic" aria-hidden="true"><use href="#i-sprout"/></svg>Marca</a>
     <a href="#cores"><svg class="nd-ic" aria-hidden="true"><use href="#i-droplets"/></svg>Cores</a>
@@ -167,6 +167,63 @@ main{display:flex;flex-direction:column;gap:calc(var(--space-6) * 1.5);padding-b
         <p class="nota"><code>data-nd-conta</code>: o número sobe até o valor quando aparece; <code>Nadiana.contar(el, novoValor)</code> conta até um valor novo. <code>.nd-feito</code>: visto desenhado; <code>Nadiana.feito(el)</code> toca de novo e vibra de leve no Android. <code>.nd-net.vivo</code> (no topo desta página): o ponto pulsa enquanto os dados estão em dia.</p>
       </section>
 
+
+      <section class="nd-secao" id="telas">
+        <h2>Toque e troca de tela</h2>
+        <p class="nota">Cartões e linhas afundam no toque. Na troca de tela, o cabeçalho e a navegação ficam parados e só o conteúdo muda. O fundo verde da navegação ao lado corre até a seção visível (<code>.nd-nav.desliza</code>).</p>
+        <div class="duas">
+          <div class="nd-cartao">
+            <div class="cab"><h2>OS 214 · RT-52</h2>
+              <span class="nd-menu-ancora">
+                <button class="nd-btn icone leve" type="button" data-nd-menu="vt-menu" aria-haspopup="menu" aria-expanded="false" aria-label="Mais ações"><svg class="nd-ic" aria-hidden="true"><use href="#i-ellipsis"/></svg></button>
+                <div class="nd-menu" id="vt-menu" role="menu">
+                  <button role="menuitem" type="button" data-msg="Editar OS 214"><svg class="nd-ic" aria-hidden="true"><use href="#i-pencil"/></svg>Editar</button>
+                  <button role="menuitem" type="button" data-msg="OS 214 duplicada"><svg class="nd-ic" aria-hidden="true"><use href="#i-copy"/></svg>Duplicar</button>
+                  <hr>
+                  <button role="menuitem" type="button" class="perigo" data-msg="OS 214 excluída"><svg class="nd-ic" aria-hidden="true"><use href="#i-trash-2"/></svg>Excluir</button>
+                </div>
+              </span>
+            </div>
+            <div class="nd-lista">
+              <button type="button"><span class="ini"><span class="av"><svg class="nd-ic" aria-hidden="true"><use href="#i-spray-can"/></svg></span><span><span class="t">Fungicida</span><span class="s">38,40 ha · 100 L/ha</span></span></span><svg class="nd-ic seta" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+              <button type="button"><span class="ini"><span class="av"><svg class="nd-ic" aria-hidden="true"><use href="#i-droplets"/></svg></span><span><span class="t">Calda</span><span class="s">3.840 L em 2 tanques</span></span></span><svg class="nd-ic seta" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+            </div>
+            <div class="linha">
+              <span class="nd-pill aviso"><svg class="nd-ic" aria-hidden="true"><use href="#i-clock"/></svg><span id="vt-pend">3</span> pendentes</span>
+              <span style="position:relative;display:inline-flex;width:56px;height:44px;align-items:center;justify-content:center"><svg class="nd-ic" aria-hidden="true"><use href="#i-bell"/></svg><span class="nd-selo erro" id="vt-selo">3</span></span>
+            </div>
+            <div class="linha">
+              <button class="nd-btn primario nd-onda" type="button" id="vt-menos"><svg class="nd-ic" aria-hidden="true"><use href="#i-check"/></svg>Lançar aplicação</button>
+              <button class="nd-btn nd-onda" type="button" id="vt-mais"><svg class="nd-ic gira" aria-hidden="true"><use href="#i-plus"/></svg>Programar</button>
+            </div>
+          </div>
+          <div class="nd-cartao">
+            <div class="nd-seg desliza" role="group" aria-label="Visão" id="vt-seg">
+              <button type="button" aria-pressed="true">Talhões</button>
+              <button type="button" aria-pressed="false">Resumo</button>
+            </div>
+            <div id="vt-a" class="nd-pilha">
+              <button class="nd-cartao" type="button" data-vt="cartao" data-t="RT-52" data-s="Fungicida · OS 214 · 12/10/2026" data-a="38,40"><span><b>RT-52</b><br><span class="nd-muted">Fungicida · na janela até 14/10</span></span></button>
+              <button class="nd-cartao" type="button" data-vt="cartao" data-t="RT-47" data-s="Inseticida · OS 215 · 16/10/2026" data-a="27,15"><span><b>RT-47</b><br><span class="nd-muted">Inseticida · programada 16/10</span></span></button>
+              <button class="nd-btn nd-onda" type="button" data-vt="frente"><svg class="nd-ic" aria-hidden="true"><use href="#i-cloud-rain"/></svg>Lançar chuva<svg class="nd-ic seta" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+            </div>
+            <div id="vt-b" class="nd-pilha" hidden>
+              <div class="nd-cartao" style="box-shadow:none"><button class="nd-btn leve" type="button" id="vt-b-volta" style="align-self:flex-start"><svg class="nd-ic" aria-hidden="true"><use href="#i-arrow-left"/></svg>Talhões</button>
+                <h2 id="vt-b-t">RT-52</h2><span class="nd-muted" id="vt-b-s"></span>
+                <div class="nd-kpi"><span class="rot">Área</span><span class="val"><span id="vt-b-a">38,40</span><small>ha</small></span></div></div>
+            </div>
+            <div id="vt-c" class="nd-pilha" hidden>
+              <button class="nd-btn leve" type="button" id="vt-c-volta" style="align-self:flex-start"><svg class="nd-ic" aria-hidden="true"><use href="#i-arrow-left"/></svg>Voltar</button>
+              <label class="nd-campo">Chuva (mm)<input class="nd-inp" id="vt-chuva" inputmode="decimal" value="12,5"></label>
+            </div>
+            <div id="vt-r" class="nd-pilha" hidden>
+              <div class="nd-kpi"><span class="rot">Área programada</span><span class="val">209,60<small>ha</small></span><span class="var">18 talhões · 5 aplicações nesta semana</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="nota"><code>Nadiana.trocar(telaAtual, telaNova, {modo})</code>: <code>"suave"</code> nas abas, <code>"frente"</code> ao abrir, <code>"volta"</code> ao voltar, <code>"cresce"</code> e <code>"encolhe"</code> com <code>{cartao}</code> quando um cartão vira a tela. Cartões e linhas da <code>.nd-lista</code> afundam sozinhos. <code>data-nd-menu</code> abre o <code>.nd-menu</code>. <code>Nadiana.rolar(el, 4)</code> troca um contador rolando; no <code>.nd-selo</code>, ele pinga.</p>
+      </section>
+
       <section class="nd-secao">
         <h2>Abas, seletor e filtros</h2>
         <div class="nd-cartao">
@@ -262,10 +319,22 @@ main{display:flex;flex-direction:column;gap:calc(var(--space-6) * 1.5);padding-b
             <p>Programe a primeira aplicação do talhão para ela aparecer no calendário.</p>
             <button class="nd-btn primario" type="button"><svg class="nd-ic" aria-hidden="true"><use href="#i-plus"/></svg>Programar aplicação</button>
           </div></div>
-          <div class="nd-cartao" aria-busy="true" aria-label="Carregando">
-            <span class="nd-esq t"></span><span class="nd-esq n"></span><span class="nd-esq l"></span><span class="nd-esq c"></span><span class="nd-esq l"></span>
+          <div class="nd-cartao">
+            <div class="nd-carrega" id="ld-carrega" data-pronto>
+              <div class="esqueleto" aria-hidden="true" style="display:flex;flex-direction:column;gap:10px"><span class="nd-esq t"></span><span class="nd-esq n"></span><span class="nd-esq l"></span><span class="nd-esq c"></span></div>
+              <div class="conteudo nd-kpi"><span class="rot">Talhão RT-52</span><span class="val">38,40<small>ha</small></span><span class="var">BRS 1003 · plantio em 12/10/2026</span></div>
+            </div>
+            <div><button class="nd-btn leve nd-onda" type="button" id="ld-carrega-b"><svg class="nd-ic" aria-hidden="true"><use href="#i-refresh-cw"/></svg>Carregar de novo</button></div>
+          </div>
+          <div class="nd-cartao">
+            <div id="ld-etapas"><div class="nd-kpi"><span class="rot">Painel atualizado</span><span class="var">18 talhões · 40 aplicações · 612,40 ha</span></div></div>
+            <div class="linha">
+              <button class="nd-btn nd-onda" type="button" id="ld-etapas-b"><svg class="nd-ic" aria-hidden="true"><use href="#i-refresh-cw"/></svg>Buscar a planilha</button>
+              <button class="nd-btn leve nd-onda" type="button" id="ld-abertura-b"><svg class="nd-ic" aria-hidden="true"><use href="#i-eye"/></svg>Ver a abertura</button>
+            </div>
           </div>
         </div>
+        <p class="nota"><code>.nd-carrega</code> com <code>.esqueleto</code> e <code>.conteudo</code>: <code>Nadiana.pronto(el)</code> troca um pelo outro no mesmo lugar. <code>Nadiana.etapas(el, [etapas])</code>: barra com a etapa da vez e aviso se passar de 4 s. <code>Nadiana.abertura("Abrindo o Painel")</code> e <code>Nadiana.abertura.fim()</code>: tela de abertura com o símbolo. Regra: até 1 s, nada; de 1 a 3 s, esqueleto; acima disso, etapas.</p>
       </section>
 
       <section class="nd-secao">
@@ -340,6 +409,42 @@ addEventListener("scroll", () => {
   let atual = 0; alvos.forEach((s, i) => { if (s.getBoundingClientRect().top < innerHeight * 0.4) atual = i; });
   links.forEach((a, i) => i === atual ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
 }, {passive: true});
+
+
+/* Toque e troca de tela */
+const vt = id => document.getElementById(id);
+vt("vt-menu").addEventListener("click", e => { const b = e.target.closest("button"); if (b) Nadiana.aviso(b.dataset.msg, b.classList.contains("perigo") ? {acao: "Desfazer", aoAgir: () => Nadiana.aviso("OS 214 recuperada", {icone: "info"})} : {}); });
+let vtN = 3;
+function vtMuda(d){ const n = Math.max(0, vtN + d); if (n === vtN) { Nadiana.aviso("Nenhuma aplicação pendente", {icone: "info"}); return; } vtN = n; Nadiana.rolar(vt("vt-pend"), n); Nadiana.rolar(vt("vt-selo"), n); }
+vt("vt-menos").addEventListener("click", () => vtMuda(-1)); vt("vt-mais").addEventListener("click", () => vtMuda(1));
+let vtCartao = null;
+vt("vt-a").addEventListener("click", e => {
+  const c = e.target.closest("[data-vt]"); if (!c) return;
+  if (c.dataset.vt === "cartao") { vtCartao = c; vt("vt-b-t").textContent = c.dataset.t; vt("vt-b-s").textContent = c.dataset.s; vt("vt-b-a").textContent = c.dataset.a;
+    Nadiana.trocar(vt("vt-a"), vt("vt-b"), {modo: "cresce", cartao: c}); }
+  else Nadiana.trocar(vt("vt-a"), vt("vt-c"), {modo: "frente"});
+});
+vt("vt-b-volta").addEventListener("click", () => Nadiana.trocar(vt("vt-b"), vt("vt-a"), {modo: "encolhe", cartao: vtCartao}));
+vt("vt-c-volta").addEventListener("click", () => Nadiana.trocar(vt("vt-c"), vt("vt-a"), {modo: "volta"}));
+vt("vt-seg").addEventListener("nd-muda", e => {
+  const atual = ["vt-a", "vt-b", "vt-c", "vt-r"].map(vt).find(x => !x.hidden);
+  Nadiana.trocar(atual, e.detail === "Resumo" ? vt("vt-r") : vt("vt-a"), {modo: "suave"});
+});
+
+/* Carregando */
+vt("ld-carrega-b").addEventListener("click", () => { const c = vt("ld-carrega"); Nadiana.pronto(c, false); setTimeout(() => Nadiana.pronto(c), 2500); });
+vt("ld-etapas-b").addEventListener("click", e => {
+  const b = e.currentTarget; b.disabled = true;
+  const et = Nadiana.etapas(vt("ld-etapas"), ["Conectando à planilha", "Lendo os talhões", "Lendo as aplicações", "Calculando áreas e datas"], {titulo: "Buscando a planilha"});
+  [1, 2, 3].forEach(i => setTimeout(() => et.etapa(i), i * 1300));
+  setTimeout(() => { et.fim(); setTimeout(() => { const box = vt("ld-etapas"); box.className = ""; box.removeAttribute("aria-busy"); box.innerHTML = '<div class="nd-kpi"><span class="rot">Painel atualizado</span><span class="var">18 talhões · 40 aplicações · 612,40 ha</span></div>'; b.disabled = false; Nadiana.aviso("Painel atualizado"); }, 700); }, 5000);
+});
+vt("ld-abertura-b").addEventListener("click", () => {
+  Nadiana.abertura("Abrindo o Painel", {atraso: 0});
+  setTimeout(() => Nadiana.abertura.frase("Buscando a planilha"), 1300);
+  setTimeout(() => Nadiana.abertura.frase("Montando o calendário"), 2600);
+  setTimeout(() => Nadiana.abertura.fim(), 4000);
+});
 
 /* Movimento */
 const mvSalvar = document.getElementById("mv-salvar");

@@ -287,4 +287,118 @@ a.nd-lista-item:hover,.nd-lista > a:hover{background:var(--panel2);margin-inline
 .nd-net.vivo.erro i::after,.nd-net.vivo.ocupado i::after{display:none}
 @keyframes nd-ping{from{transform:scale(1);opacity:.7}to{transform:scale(2.8);opacity:0}}
 
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+/* ---------- Toque e troca de tela ---------- */
+/* Cartão e linha que afundam: cartões e linhas tocáveis encolhem no toque e voltam com mola (.nd-afunda em qualquer outro) */
+a.nd-cartao,button.nd-cartao,.nd-lista > a,.nd-lista > button,.nd-afunda{transition:border-color var(--dur-media) var(--curva),box-shadow var(--dur-media) var(--curva),background var(--dur-media) var(--curva),transform 280ms var(--curva-mola)}
+a.nd-cartao:active,button.nd-cartao:active,.nd-lista > a:active,.nd-lista > button:active,.nd-afunda:active{transform:scale(.97);transition-duration:var(--dur-media),var(--dur-media),var(--dur-media),90ms}
+.nd-lista > button{width:100%;border:0;border-bottom:1px solid var(--line2);background:transparent;text-align:left;font:inherit;cursor:pointer}
+.nd-lista > button:last-child{border-bottom:0}
+
+/* Menu que nasce do botão: <div class="nd-menu-ancora"><button data-nd-menu="m1" aria-expanded="false">…</button><div class="nd-menu" id="m1" role="menu"><button role="menuitem">…</button></div></div> */
+.nd-menu-ancora{position:relative;display:inline-block}
+.nd-menu{position:absolute;top:calc(100% + 6px);right:0;z-index:25;min-width:210px;padding:6px;background:var(--panel);border:1px solid var(--line2);border-radius:var(--radius-xl);box-shadow:var(--sombra-2);display:flex;flex-direction:column;transform-origin:top right;opacity:0;transform:scale(.88) translateY(-4px);visibility:hidden;transition:opacity 140ms var(--curva),transform 180ms var(--curva),visibility 0s 180ms}
+.nd-menu.esquerda{right:auto;left:0;transform-origin:top left}
+.nd-menu.acima{top:auto;bottom:calc(100% + 6px);transform-origin:bottom right}
+.nd-menu.acima.esquerda{transform-origin:bottom left}
+.nd-menu.aberto{opacity:1;transform:none;visibility:visible;transition:opacity 160ms var(--curva),transform 280ms var(--curva-mola),visibility 0s}
+.nd-menu > button,.nd-menu > a{display:flex;align-items:center;gap:var(--space-3);min-height:44px;padding:0 var(--space-3);border:0;border-radius:var(--radius-md);background:transparent;color:var(--ink);text-decoration:none;cursor:pointer;font-size:15px;text-align:left;white-space:nowrap}
+.nd-menu > button:hover,.nd-menu > a:hover,.nd-menu > :focus-visible{background:var(--panel2)}
+.nd-menu > .perigo{color:var(--bad)}
+.nd-menu > hr{border:0;border-top:1px solid var(--line2);margin:4px 0}
+
+/* Número que rola: Nadiana.rolar(el, 4). O número novo entra de baixo quando sobe e de cima quando desce */
+.nd-rola{display:inline-grid;overflow:hidden;vertical-align:bottom}
+.nd-rola > span{grid-area:1/1}
+.nd-rola > .entra{animation:nd-rola-entra 300ms var(--curva-mola) both}
+.nd-rola > .sai{animation:nd-rola-sai 220ms var(--curva) both}
+.nd-rola.desce > .entra{--de:-100%}
+.nd-rola.desce > .sai{--para:100%}
+@keyframes nd-rola-entra{from{transform:translateY(var(--de,100%));opacity:0}}
+@keyframes nd-rola-sai{to{transform:translateY(var(--para,-100%));opacity:0}}
+/* Selo de contagem sobre um ícone (navegação, sino). .erro para atrasos. Some com hidden quando zera */
+.nd-selo{position:absolute;top:4px;left:calc(50% + 6px);min-width:20px;height:20px;padding:0 5px;border-radius:var(--radius-pill);background:var(--brand);color:var(--brand-ink);font-size:12px;font-weight:700;line-height:1;display:inline-flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;pointer-events:none}
+.nd-selo.erro{background:var(--bad);color:var(--panel)}
+.nd-selo.pinga{animation:nd-selo-pinga 420ms var(--curva-mola)}
+@keyframes nd-selo-pinga{40%{transform:scale(1.35)}}
+.nd-nav a,.nd-nav button{position:relative}
+@media (min-width:900px){.nd-nav .nd-selo{position:static;margin-left:auto}}
+
+/* Elemento da base com hidden some de verdade, mesmo que a classe dê display (as trocas de tela usam hidden) */
+[class*="nd-"][hidden]{display:none!important}
+/* Troca de tela: Nadiana.trocar(de, para, {modo:"suave"|"frente"|"volta"|"cresce"}).
+   O cabeçalho e a navegação ficam parados; entre páginas (Início → Painel) a troca é suave sozinha */
+@view-transition{navigation:auto}
+.nd-topo{view-transition-name:nd-topo}
+.nd-nav{view-transition-name:nd-nav}
+::view-transition-old(root){animation:nd-vt-sai 120ms var(--curva) both}
+::view-transition-new(root){animation:nd-vt-entra 260ms var(--curva) 60ms both}
+html[data-nd-troca="frente"]::view-transition-old(root){animation:nd-vt-recua 340ms var(--curva) both}
+html[data-nd-troca="frente"]::view-transition-new(root){animation:nd-vt-de-lado 340ms var(--curva) both}
+html[data-nd-troca="volta"]::view-transition-old(root){animation:nd-vt-de-lado 340ms var(--curva) reverse both;z-index:1}
+html[data-nd-troca="volta"]::view-transition-new(root){animation:nd-vt-recua 340ms var(--curva) reverse both}
+html[data-nd-troca="cresce"]::view-transition-old(root){animation:nd-vt-sai 160ms var(--curva) both}
+html[data-nd-troca="cresce"]::view-transition-new(root){animation:nd-vt-entra 220ms var(--curva) 160ms both}
+::view-transition-group(nd-cresce){animation-duration:380ms;animation-timing-function:var(--curva)}
+::view-transition-old(nd-cresce),::view-transition-new(nd-cresce){height:100%;object-fit:cover;object-position:top left}
+@keyframes nd-vt-sai{to{opacity:0}}
+@keyframes nd-vt-entra{from{opacity:0;transform:translateY(10px)}}
+@keyframes nd-vt-de-lado{from{transform:translateX(100%)}to{transform:none}}
+@keyframes nd-vt-recua{from{transform:none;opacity:1}to{transform:translateX(-25%);opacity:.4}}
+/* Sem View Transitions no navegador: a tela nova só aparece subindo de leve */
+.nd-aparece{animation:nd-vt-entra 260ms var(--curva) both}
+.nd-aparece.frente{animation-name:nd-vem-direita}
+.nd-aparece.volta{animation-name:nd-vem-esquerda}
+@keyframes nd-vem-direita{from{opacity:0;transform:translateX(32px)}}
+@keyframes nd-vem-esquerda{from{opacity:0;transform:translateX(-32px)}}
+
+/* Marcador da navegação que desliza: .nd-nav.desliza. O fundo verde corre até o item ativo e o ícone dá um pulinho */
+.nd-nav.desliza > .nd-nav-marca{position:absolute;left:0;top:0;width:0;height:0;border-radius:var(--radius-pill);background:var(--brand-soft);pointer-events:none;transition:transform 400ms var(--curva-mola),width 400ms var(--curva-mola),height 400ms var(--curva-mola)}
+.nd-nav.desliza > .nd-nav-marca.parado{transition:none}
+.nd-nav.desliza a,.nd-nav.desliza button{z-index:1}
+.nd-nav.desliza [aria-current="page"] .nd-ic{background:none}
+.nd-nav .nd-ic.pula{animation:nd-ic-pula 420ms var(--curva-mola)}
+@keyframes nd-ic-pula{40%{transform:translateY(-4px) scale(1.12)}}
+@media (min-width:900px){
+  .nd-nav.desliza > .nd-nav-marca{border-radius:var(--radius-lg)}
+  .nd-nav.desliza [aria-current="page"]{background:transparent}
+}
+
+/* ---------- Carregamento ---------- */
+/* Esqueleto que vira conteúdo: <div class="nd-carrega"><div class="esqueleto">…nd-esq…</div><div class="conteudo">…</div></div>
+   Nadiana.pronto(el) troca um pelo outro no mesmo lugar */
+.nd-carrega{display:grid}
+.nd-carrega > *{grid-area:1/1;min-width:0;transition:opacity var(--dur-lenta) var(--curva),transform var(--dur-lenta) var(--curva),visibility 0s}
+.nd-carrega > .conteudo{opacity:0;transform:translateY(6px);visibility:hidden}
+.nd-carrega[data-pronto] > .esqueleto{opacity:0;visibility:hidden;transition-delay:0s,0s,var(--dur-lenta)}
+.nd-carrega[data-pronto] > .conteudo{opacity:1;transform:none;visibility:visible}
+
+/* Abertura com o símbolo: Nadiana.abertura("Abrindo o Painel") … Nadiana.abertura.fim() */
+.nd-abertura{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-5);background:var(--bg);padding:var(--space-4);transition:opacity var(--dur-lenta) var(--curva)}
+.nd-abertura.sai{opacity:0;pointer-events:none}
+.nd-abertura .roda{position:relative;width:112px;height:112px;display:flex;align-items:center;justify-content:center}
+.nd-abertura .roda img{width:60px;height:auto;animation:nd-respira 1.6s var(--curva) infinite alternate}
+.nd-abertura .roda svg{position:absolute;inset:0;width:100%;height:100%;animation:nd-gira 1.4s linear infinite}
+.nd-abertura .roda circle{fill:none;stroke-width:4;stroke-linecap:round}
+.nd-abertura .roda .fundo{stroke:var(--line2)}
+.nd-abertura .roda .arco{stroke:var(--brand);stroke-dasharray:80 400}
+.nd-abertura p{margin:0;font-size:16px;font-weight:500;min-height:1.4em;text-align:center}
+@keyframes nd-respira{from{transform:scale(.94);opacity:.85}to{transform:scale(1.04);opacity:1}}
+
+/* Barra com etapas: var c = Nadiana.etapas(el, ["Conectando à planilha", …]); c.etapa(1); c.fim() */
+.nd-etapas{display:flex;flex-direction:column;gap:var(--space-3)}
+.nd-etapas .topo{display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-3);font-weight:500}
+.nd-etapas .topo b{font-family:var(--font-display);font-weight:600;font-size:26px;font-variant-numeric:tabular-nums}
+.nd-etapas .nd-barra{height:8px}
+.nd-etapas .nd-barra i{transition:width var(--dur-lenta) var(--curva)}
+.nd-etapas ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.nd-etapas li{display:flex;align-items:center;gap:var(--space-2);font-size:14px;color:var(--muted)}
+.nd-etapas li > i{width:18px;height:18px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center}
+.nd-etapas li > i::before{content:"";width:10px;height:10px;border-radius:50%;border:2px solid var(--line)}
+.nd-etapas li.agora{color:var(--ink);font-weight:600}
+.nd-etapas li.agora > i::before{width:14px;height:14px;border-color:currentColor;border-right-color:transparent;animation:nd-gira 700ms linear infinite}
+.nd-etapas li.feita{color:var(--ink)}
+.nd-etapas li.feita > i::before{display:none}
+.nd-etapas li.feita > i .nd-ic{width:18px;height:18px;color:var(--ok)}
+.nd-etapas .nd-msg{font-size:14px}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
