@@ -85,6 +85,12 @@ Use sempre a variável, nunca o código da cor solto no CSS.
 - Classes prontas: `.nd-titulo-pagina` (28px), `.nd-subtitulo` (18px), `.nd-numero-destaque` (30px), `.nd-corpo-destaque` (17px), `.nd-corpo` (16px), `.nd-corpo-pequeno` (14px), `.nd-rotulo` (13px, caixa alta), `.nd-legenda` (12,5px).
 - Números que se comparam em coluna: `font-variant-numeric: tabular-nums` (ou a classe `.nd-num`).
 
+## Tamanho de tela
+
+- **Painéis** (muitos números, gráficos, mapa e tabelas) ocupam a tela toda: `.nd-wrap.cheio`, de celular a monitor grande e TV. Grades com `auto-fit` ganham colunas quando sobra espaço (`.nd-grade`), o gráfico principal cresce com a largura (`.nd-grafico.cresce`) e o mapa usa a altura visível (`.nd-alto-tela`).
+- **Telas de lançamento e formulário** ficam numa coluna estreita (`.nd-wrap` ou `.estreito`), centrada: campo largo demais fica difícil de ler e de preencher.
+- Nada rola para o lado: confira em 390px (celular), 1366px (notebook), 1920px e 2560px (monitor).
+
 ## Espaço, cantos, sombras e movimento
 
 - Espaços: `--space-1` 4px, `--space-2` 8px, `--space-3` 12px, `--space-3_5` 14px, `--space-4` 16px, `--space-5` 20px, `--space-6` 24px.
@@ -98,7 +104,8 @@ Use sempre a variável, nunca o código da cor solto no CSS.
 
 | Classe | O que é |
 | --- | --- |
-| `.nd-wrap` (`.largo`, `.estreito`) | Coluna central com margem lateral segura (860, 1440 ou 640px). |
+| `.nd-wrap` (`.largo`, `.estreito`, `.cheio`) | Coluna central com margem lateral segura (860, 1440 ou 640px). `.cheio`: painel que ocupa a tela toda, até 2.560px, com margem que cresce com a tela. |
+| `.nd-alto-tela`, `.nd-grafico.cresce` | Mapa ou gráfico principal com a altura visível da tela; gráfico que fica mais alto em tela larga. |
 | `.nd-app`, `.nd-nav`, `.nd-conteudo` | Estrutura de app com navegação embaixo/lateral. |
 | `.nd-topo` | Cabeçalho claro com logo, nome do app e ações. |
 | `.nd-faixa` | Faixa de marca em petróleo (capa, tela inicial). |

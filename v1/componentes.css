@@ -16,6 +16,12 @@ h1,h2,h3{text-wrap:balance}
 .nd-wrap{width:100%;max-width:860px;margin:0 auto;padding-left:max(var(--space-4),env(safe-area-inset-left,0px));padding-right:max(var(--space-4),env(safe-area-inset-right,0px))}
 .nd-wrap.largo{max-width:1440px}
 .nd-wrap.estreito{max-width:640px}
+/* Painel que ocupa a tela: .nd-wrap.cheio vai até 2.560 px e a margem lateral cresce com a tela.
+   .nd-alto-tela: mapa ou gráfico principal com a altura visível da tela (menos o cabeçalho) */
+:root{--margem-tela:clamp(16px,2vw,48px)}
+.nd-wrap.cheio{max-width:2560px;padding-left:max(var(--margem-tela),env(safe-area-inset-left,0px));padding-right:max(var(--margem-tela),env(safe-area-inset-right,0px))}
+.nd-alto-tela{height:clamp(380px,calc(100dvh - var(--alto-tela-desconto,190px)),1300px)}
+.nd-grafico.cresce{height:clamp(260px,19vw,460px)}
 .nd-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* Ícones (icones.js) */
